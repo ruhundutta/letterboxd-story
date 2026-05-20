@@ -964,37 +964,15 @@ So he built one.</div>
                 </div>
             </div>
 
-            <!-- CARD 5: FRIEND PLACEHOLDER -->
-            <!-- 
-                FRIEND PROFILE CARD
-                Replace the following placeholders:
-                - FRIEND_DISPLAY_NAME
-                - FRIEND_USERNAME  
-                - FRIEND_FOLLOWER_COUNT
-                - FRIEND_MEMBER_SINCE
-                - FRIEND_FILMS_LOGGED
-                - FRIEND_BIO
-                - Top Four film titles (4 placeholders)
-                - FRIEND_REVIEW_FILM, FRIEND_REVIEW_STARS, 
-                  FRIEND_REVIEW_TEXT
-                - Avatar background colour and initials
-                - IMAGE: Friend avatar / Friend Top Four Posters
-            -->
-            <div class="profile-card featured">
-                <div class="profile-card-avatar" style="background-color: #1A5C3A;">??</div>
-                <div class="profile-card-name">FRIEND_DISPLAY_NAME</div>
-                <div class="profile-card-username">@FRIEND_USERNAME</div>
-                <div class="profile-card-followers">FRIEND_FOLLOWER_COUNT Followers</div>
-                <div class="top-four-label">TOP FOUR</div>
-                <div class="top-four-grid">
-                    <div class="tiny-poster" title="Placeholder 1"></div>
-                    <div class="tiny-poster" title="Placeholder 2"></div>
-                    <div class="tiny-poster" title="Placeholder 3"></div>
-                    <div class="tiny-poster" title="Placeholder 4"></div>
-                </div>
-                <span class="pill orange">REAL USER — FROM THE FEED</span>
-                <div class="profile-card-quote">"FRIEND_REVIEW_TEXT"<br>— FRIEND_REVIEW_FILM, FRIEND_REVIEW_STARS</div>
-            </div>
+            <!-- CARD 5: FRIEND PROFILE EMBED -->
+            <div id="letterboxd-embed-wrapper-tc">Loading...</div>
+            <script>
+            fetch('https://lb-embed-content.bokonon.dev?username=3IIHp')
+            .then(response => response.text())
+            .then(data => {
+            document.getElementById('letterboxd-embed-wrapper-tc').innerHTML = data;
+            });
+            </script>
 
             <!-- CARD 6: YOU -->
             <div class="profile-card">
@@ -1108,11 +1086,9 @@ So he built one.</div>
         SCENE 09: REVIEW SUBMISSION
         Required setup before this works:
         1. Get TMDB API key from themoviedb.org/settings/api
-           Replace TMDB_API_KEY_PLACEHOLDER below
         2. Create Google Sheet with columns:
            Timestamp | Name | Film Title | Film Year | Poster Path | Rating | Review
         3. Deploy Google Apps Script as Web App
-           Replace APPS_SCRIPT_URL_PLACEHOLDER below
         4. See bottom of file for Apps Script code
     -->
     <section class="container scene-09 reveal reveal-up">
@@ -1217,11 +1193,11 @@ So he built one.</div>
         let selectedFilm = null;
         let userRating = 0;
         
-        /* REPLACE TMDB_API_KEY_PLACEHOLDER with your actual TMDB v3 API key */
-        const TMDB_API_KEY = 'TMDB_API_KEY_PLACEHOLDER'; 
+        /* Updated with your actual TMDB v3 API key */
+        const TMDB_API_KEY = 'e7436aeaa869794362bd07b30969c95d'; 
         
-        /* REPLACE APPS_SCRIPT_URL_PLACEHOLDER with your Google Apps Script Web App deployment URL */
-        const APPS_SCRIPT_URL = 'APPS_SCRIPT_URL_PLACEHOLDER';
+        /* Updated with your Google Apps Script Web App deployment URL */
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxrcfdSlLCAspEYFl0k8QunT3PiK32CurNGBJqxP60oasjQtulq9HL6iLCoZk3M_yyQ1w/exec';
 
         // INTERSECTION OBSERVER FOR REVEALS
         const revealObserver = new IntersectionObserver((entries) => {
