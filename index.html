@@ -11,14 +11,14 @@
     <style>
         :root {
             --bg-page: #14181C;
-            --bg-card: rgba(31, 37, 53, 0.85); /* Slick glassmorphism base */
+            --bg-card: rgba(31, 37, 53, 0.75);
             --bg-card-solid: #1F2535;
-            --text-body: #8899AA; /* More muted sans-serif */
+            --text-body: #99AABB;
             --text-heading: #FFFFFF;
             --accent-orange: #FF8000;
-            --badge-green: #00E054; /* Letterboxd brighter green */
+            --badge-green: #00C030;
             --brand-red: #FF3D00;
-            --divider: #2C3440;
+            --divider: rgba(69, 102, 119, 0.4);
             
             --font-display: 'Barlow Condensed', sans-serif;
             --font-body: 'Source Sans 3', sans-serif;
@@ -33,7 +33,34 @@
             font-family: var(--font-body);
             line-height: 1.6;
             overflow-x: hidden;
-            font-size: 15px; /* Slightly smaller typography */
+            font-size: 16px;
+            position: relative;
+        }
+
+        /* Ambient Blur Bokeh Background */
+        .ambient-background {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: -2;
+            overflow: hidden;
+            background: #0d1013;
+            pointer-events: none;
+        }
+        .bokeh-sphere {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(140px);
+            opacity: 0.15;
+            mix-blend-mode: screen;
+            animation: floatAmbient 20s infinite ease-in-out;
+        }
+        .bokeh-1 { top: -10%; left: 10%; width: 500px; height: 500px; background: var(--brand-red); animation-delay: 0s; }
+        .bokeh-2 { bottom: 10%; right: -5%; width: 600px; height: 600px; background: var(--accent-orange); animation-delay: -5s; }
+        .bokeh-3 { top: 40%; right: 20%; width: 450px; height: 450px; background: var(--badge-green); opacity: 0.08; animation-delay: -10s; }
+
+        @keyframes floatAmbient {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(40px) scale(1.1); }
         }
 
         h1, h2, h3, h4, h5, h6 {
@@ -43,34 +70,14 @@
             text-transform: uppercase;
         }
 
-        /* Stronger Grain / Noise Overlay */
+        /* Noise Overlay */
         .noise-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             pointer-events: none;
             z-index: 9999;
-            opacity: 0.08; /* Increased grain */
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-        }
-
-        /* Faded Background Images */
-        .bg-img-container {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1;
-            overflow: hidden;
-        }
-        .bg-img-container::after {
-            content: '';
-            position: absolute;
-            bottom: 0; left: 0; width: 100%; height: 60%;
-            background: linear-gradient(to top, var(--bg-page) 0%, transparent 100%);
-        }
-        .bg-image {
-            width: 100%; height: 100%;
-            object-fit: cover;
-            opacity: 0.15;
-            mix-blend-mode: screen;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
 
         /* Letterboxd Nav Bar */
@@ -78,39 +85,41 @@
             position: fixed;
             top: 0; left: 0; width: 100%;
             height: 60px;
-            background-color: rgba(20, 24, 28, 0.95);
-            backdrop-filter: blur(10px);
+            background-color: rgba(17, 17, 17, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 0 5%;
             z-index: 1000;
-            border-bottom: 1px solid var(--divider);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
         }
         .nav-logo {
+            color: var(--text-heading);
+            font-family: var(--font-display);
+            font-size: 24px;
+            letter-spacing: 2px;
             display: flex;
             align-items: center;
             gap: 10px;
+            text-decoration: none;
         }
         .nav-logo img {
-            height: 28px;
+            width: 26px;
+            height: 26px;
+            object-fit: contain;
         }
         .nav-links {
             display: flex;
-            gap: 25px;
+            gap: 24px;
             font-family: var(--font-display);
             font-size: 14px;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
             color: var(--text-body);
         }
-        .nav-links span, .nav-links a { 
-            color: var(--text-body); 
-            text-decoration: none; 
-            transition: color 0.2s;
-        }
-        .nav-links span:hover, .nav-links a:hover { 
-            color: var(--text-heading); 
-        }
+        .nav-links a { color: var(--text-body); text-decoration: none; transition: color 0.2s; }
+        .nav-links a:hover { color: var(--text-heading); }
         
         @media (max-width: 600px) {
             .nav-links { display: none; }
@@ -119,274 +128,555 @@
         /* IntersectionObserver Reveal Classes */
         .reveal {
             opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            transform: translateY(20px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .reveal.reveal-right { transform: translateX(40px); }
-        .reveal.revealed { opacity: 1; transform: translate(0, 0); }
+        .reveal.reveal-right {
+            transform: translateX(40px);
+        }
+        .reveal.revealed {
+            opacity: 1;
+            transform: translate(0, 0);
+        }
 
-        /* Thin Divider */
+        /* Dividers */
         .divider {
             width: 100%;
             height: 1px;
             background-color: var(--divider);
             margin: 60px 0;
             position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .divider::after {
+            content: '★';
+            color: var(--accent-orange);
+            background: var(--bg-page);
+            padding: 0 14px;
+            font-size: 14px;
         }
 
         /* Generic Container */
         .container {
-            max-width: 860px;
+            max-width: 950px;
             margin: 0 auto;
             padding: 80px 20px;
             position: relative;
+            z-index: 1;
         }
 
-        /* Glassmorphism Cards */
-        .glass-card {
-            background: var(--bg-card);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 8px;
-            padding: 25px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
-
-        /* Star Rating & Icons (Interactive) */
+        /* Star Rating & Icons */
         .stars {
-            color: var(--divider);
+            color: rgba(69, 102, 119, 0.5);
             letter-spacing: 2px;
             font-size: 18px;
-            cursor: default;
+            transition: color 0.2s, text-shadow 0.2s;
         }
-        .stars.filled { color: var(--accent-orange); }
-        .stars.interactive span { transition: all 0.2s; cursor: pointer; }
-        .stars.interactive span:hover, 
-        .stars.interactive span.hover-active {
+        .stars.filled {
             color: var(--accent-orange);
-            text-shadow: 0 0 8px var(--accent-orange);
-            transform: scale(1.1);
+        }
+        .stars.filled:hover {
+            text-shadow: 0 0 8px rgba(255, 128, 0, 0.6);
+        }
+        .heart-icon {
+            color: rgba(69, 102, 119, 0.5);
+            cursor: pointer;
+            transition: color 0.2s, transform 0.2s;
+        }
+        .heart-icon:hover {
+            color: #FF3D00;
+            transform: scale(1.15);
         }
 
-        /* Scene 01: Cold Open */
+        /* Pills */
+        .pill {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: var(--font-display);
+            font-size: 12px;
+            letter-spacing: 1px;
+            color: #FFF;
+        }
+        .pill.green { background-color: var(--badge-green); }
+        .pill.orange { background-color: var(--accent-orange); }
+        .pill.grey { background-color: rgba(69, 102, 119, 0.6); }
+
+        /* SCENE 01: COLD OPEN */
         .scene-01 {
             min-height: 100vh;
+            background-color: #0a0a0a;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 100px 20px 20px;
+            padding: 80px 20px 40px;
             position: relative;
+            z-index: 10;
+        }
+        .intro-text {
+            margin-bottom: 20px;
+            min-height: 180px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
         .intro-text p {
             font-family: var(--font-display);
-            font-size: clamp(28px, 6vw, 48px);
+            font-size: clamp(24px, 5vw, 38px);
             color: var(--text-heading);
             opacity: 0;
-            animation: fadeIn 1.5s forwards;
-            margin-bottom: 5px;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+            margin-bottom: 8px;
+            animation: fadeInLine 1.5s forwards;
         }
         .intro-text p:nth-child(1) { animation-delay: 0.5s; }
-        .intro-text p:nth-child(2) { animation-delay: 2s; }
-        .intro-text p:nth-child(3) { animation-delay: 3.5s; }
-        .intro-text p:nth-child(4) { animation-delay: 5s; }
+        .intro-text p:nth-child(2) { animation-delay: 2.2s; }
+        .intro-text p:nth-child(3) { animation-delay: 3.9s; }
+        .intro-text p:nth-child(4) { animation-delay: 5.6s; font-weight: 700; color: var(--accent-orange); }
 
-        @keyframes fadeIn { to { opacity: 1; } }
+        @keyframes fadeInLine { to { opacity: 1; transform: translateY(0); } }
 
-        /* SCENE 09 Form (Moved to top) */
-        .log-section-top {
+        .phone-mockup {
+            width: 290px;
+            height: 490px;
+            border: 3px solid #222;
+            border-radius: 36px;
+            margin: 20px 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             opacity: 0;
-            animation: fadeIn 2s forwards 6.5s;
-            width: 100%;
-            max-width: 600px;
-            margin-top: 40px;
-            z-index: 10;
-        }
-        
-        .input-dark {
-            width: 100%; background: rgba(0,0,0,0.4); border: 1px solid var(--divider); color: var(--text-heading);
-            padding: 12px; border-radius: 4px; font-family: var(--font-body); font-size: 16px; margin-bottom: 10px;
-            transition: border-color 0.3s;
-        }
-        .input-dark:focus { outline: none; border-color: var(--badge-green); }
-        .textarea-dark { height: 100px; resize: none; font-family: var(--font-mono); font-size: 14px; }
-        
-        .submit-btn {
-            width: 100%; height: 48px; background: var(--badge-green); color: #000; font-family: var(--font-display);
-            font-size: 20px; font-weight: 700; border: none; border-radius: 4px; cursor: pointer; transition: all 0.2s;
-        }
-        .submit-btn:hover { background: #00C030; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,224,84,0.3); }
-
-        .tmdb-results {
-            position: absolute; width: 100%; background: var(--bg-card-solid); border: 1px solid var(--divider);
-            border-top: none; max-height: 250px; overflow-y: auto; z-index: 20; border-radius: 0 0 4px 4px; display: none;
-            text-align: left;
-        }
-        .tmdb-result-item { display: flex; gap: 10px; padding: 10px; cursor: pointer; border-bottom: 1px solid var(--divider); transition: background 0.2s; }
-        .tmdb-result-item:hover { background: rgba(255,255,255,0.05); }
-        .tmdb-thumb { width: 44px; height: 66px; background: #000; object-fit: cover; border-radius: 3px; }
-        
-        .state-b, .state-c { display: none; text-align: left; }
-        .selected-film-card { display: flex; gap: 15px; margin-bottom: 20px; position: relative; }
-        .selected-poster { width: 80px; height: 120px; background: #000; border-radius: 4px; object-fit: cover; box-shadow: 0 5px 10px rgba(0,0,0,0.5); }
-        .close-btn { position: absolute; top: -5px; right: -5px; background: none; border: none; color: var(--text-body); cursor: pointer; font-size: 24px; transition: color 0.2s; }
-        .close-btn:hover { color: var(--brand-red); }
-        
-        .flipper { transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1); transform-style: preserve-3d; position: relative; }
-        .flipped { transform: rotateY(180deg); }
-        .front, .back { backface-visibility: hidden; width: 100%; }
-        .back { position: absolute; top: 0; left: 0; height: 100%; transform: rotateY(180deg); display: flex; flex-direction: column; justify-content: center; align-items: center; }
-
-        /* Scroll Prompt */
-        .scroll-prompt {
-            margin-top: 40px; font-size: 12px; font-family: var(--font-display); letter-spacing: 2px;
-            color: var(--divider); animation: bounce 2s infinite, fadeIn 2s forwards 8s; opacity: 0; text-transform: uppercase;
-        }
-        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(8px); } }
-
-        /* Responsive CSS Grid for Posters */
-        .raya-profile { margin-top: 50px; }
-        .profile-header-custom {
-            display: flex; align-items: center; gap: 20px; margin-bottom: 30px; border-bottom: 1px solid var(--divider); padding-bottom: 20px;
-        }
-        .raya-avatar {
-            width: 90px; height: 90px; border-radius: 50%; object-fit: cover;
-            border: 2px solid var(--bg-card-solid); box-shadow: 0 0 0 2px var(--divider);
-        }
-        
-        .grid-header {
-            font-family: var(--font-body); font-size: 12px; letter-spacing: 1px; color: var(--text-body);
-            text-transform: uppercase; margin-bottom: 15px; border-bottom: 1px solid var(--divider); padding-bottom: 5px;
-            display: flex; justify-content: space-between; align-items: baseline;
-        }
-
-        .posters-grid-4 {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 15px;
-            margin-bottom: 50px;
-        }
-        .posters-grid-5 {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
-            gap: 10px;
-            margin-bottom: 50px;
-        }
-
-        .poster-item {
+            animation: phoneDiscover 1.8s forwards 6.8s;
             position: relative;
-            aspect-ratio: 2 / 3;
+            background: #111;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.7), 0 0 30px rgba(255, 128, 0, 0.05);
+        }
+        @keyframes phoneDiscover { to { opacity: 1; } }
+
+        .phone-stars {
+            font-size: 32px;
+            color: rgba(69, 102, 119, 0.3);
+            display: flex;
+            gap: 6px;
+        }
+        .phone-stars span {
+            transition: color 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), text-shadow 0.4s;
+        }
+        .fake-review-area {
+            width: 80%;
+            height: 110px;
+            margin-top: 25px;
+            border-top: 1px solid #222;
+            padding-top: 15px;
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: #778899;
+            text-align: left;
+            opacity: 0;
+        }
+        .blinking-cursor::after {
+            content: '|';
+            animation: blink 1s step-start infinite;
+        }
+        @keyframes blink { 50% { opacity: 0; } }
+
+        .first-log-form {
+            opacity: 0;
+            animation: phoneDiscover 1.5s forwards 9.5s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 420px;
+            margin-top: 20px;
+        }
+        .first-log-label {
+            font-family: var(--font-display);
+            font-size: 13px;
+            color: #667788;
+            margin-bottom: 8px;
+            letter-spacing: 2px;
+            font-weight: 600;
+        }
+        .first-log-input {
+            width: 100%;
+            background: rgba(25, 30, 43, 0.9);
+            border: 1px solid #345;
+            color: var(--text-heading);
+            padding: 14px;
+            font-family: var(--font-mono);
+            border-radius: 6px;
+            resize: none;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .first-log-input:focus {
+            outline: none;
+            border-color: var(--accent-orange);
+            box-shadow: 0 0 10px rgba(255,128,0,0.15);
+        }
+        .scroll-prompt {
+            margin-top: 30px;
+            font-size: 12px;
+            color: #456;
+            font-family: var(--font-display);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            animation: bounce 2s infinite;
+        }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(6px); } }
+
+        /* Account Header Layout */
+        .account-header {
+            max-width: 950px;
+            margin: 90px auto 30px;
+            padding: 0 20px;
+        }
+        .profile-top {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+        @media (max-width: 600px) {
+            .profile-top { flex-direction: column; text-align: center; }
+        }
+        .avatar-placeholder {
+            width: 84px; height: 84px;
+            border-radius: 50%;
+            background-color: var(--brand-red);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: var(--font-display);
+            font-size: 42px;
+            color: #FFF;
+            flex-shrink: 0;
+            box-shadow: 0 0 15px rgba(255, 61, 0, 0.2);
+        }
+        .profile-info h1 { font-size: 26px; text-transform: none; letter-spacing: 0.5px; }
+        .profile-username { color: #667788; font-size: 14px; margin-bottom: 6px; }
+        .profile-bio { font-size: 14px; color: var(--text-body); margin-bottom: 12px; }
+        
+        .tab-bar {
+            display: flex;
+            gap: 35px;
+            font-family: var(--font-display);
+            font-size: 14px;
+            letter-spacing: 1.5px;
+            border-bottom: 1px solid var(--divider);
+            padding-bottom: 12px;
+            justify-content: flex-start;
+        }
+        @media (max-width: 600px) { .tab-bar { justify-content: center; gap: 20px; } }
+        .tab-bar span { color: var(--text-body); cursor: pointer; transition: color 0.2s; }
+        .tab-bar span:hover { color: var(--text-heading); }
+        .tab-bar span.active {
+            color: var(--text-heading);
+            font-weight: 600;
+            position: relative;
+        }
+        .tab-bar span.active::after {
+            content: '';
+            position: absolute;
+            bottom: -13px; left: 0;
+            width: 100%; height: 2px;
+            background-color: var(--accent-orange);
+        }
+
+        /* CSS Grids & Dynamic Layout Components */
+        .grid-header {
+            font-family: var(--font-display);
+            font-size: 12px;
+            color: #667788;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding-bottom: 6px;
+            border-bottom: 1px solid rgba(69, 102, 119, 0.25);
+            margin-bottom: 16px;
+        }
+
+        .poster-grid {
+            display: grid;
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+        .grid-4-col {
+            grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+        }
+        .grid-5-col {
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        }
+
+        .poster-card {
+            position: relative;
+            aspect-ratio: 2/3;
             border-radius: 6px;
             overflow: hidden;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+            background-color: #1a1f2c;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s;
             border: 1px solid transparent;
-            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
             cursor: pointer;
         }
-        .poster-item img {
-            width: 100%; height: 100%; object-fit: cover; display: block;
+        .poster-card img {
+            width: 100%; height: 100%; object-fit: cover;
+            transition: filter 0.3s;
         }
-        .poster-item:hover {
-            transform: scale(1.05) translateY(-5px);
+        .poster-card:hover {
+            transform: scale(1.04) translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.6);
             border-color: var(--badge-green);
-            box-shadow: 0 10px 20px rgba(0, 224, 84, 0.2);
-            z-index: 2;
         }
         
-        .activity-meta {
+        .card-metadata {
             margin-top: 8px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 11px;
-            color: var(--accent-orange);
+            font-size: 13px;
             padding: 0 2px;
         }
-        .heart-icon { color: var(--brand-red); font-size: 12px; }
 
-        /* Interactive Stats Mobile Graphic */
-        .mobile-mockup-container {
-            display: flex; justify-content: center; margin: 60px 0;
+        /* Ambient Faded Strips Backdrop Component */
+        .backdrop-strip {
+            width: 100vw;
+            height: 320px;
+            margin-left: calc(-50vw + 50%);
+            position: relative;
+            overflow: hidden;
+            margin-top: 40px;
+            margin-bottom: 40px;
+            z-index: 0;
         }
-        .mobile-device {
-            width: 300px; height: 600px; background: #000; border-radius: 40px;
-            border: 8px solid #222; box-shadow: 0 20px 50px rgba(0,0,0,0.8), inset 0 0 20px rgba(255,255,255,0.05);
-            position: relative; overflow: hidden; display: flex; flex-direction: column;
+        .backdrop-strip img {
+            width: 100%; height: 100%; object-fit: cover;
+            opacity: 0.25;
+            filter: grayscale(20%) contrast(110%);
         }
-        .mobile-notch {
-            position: absolute; top: 0; left: 50%; transform: translateX(-50%);
-            width: 120px; height: 25px; background: #222; border-radius: 0 0 15px 15px; z-index: 10;
+        .backdrop-strip::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, transparent 40%, var(--bg-page) 100%);
         }
-        .mobile-screen {
-            flex-grow: 1; padding: 40px 20px 20px; display: flex; flex-direction: column; gap: 15px;
-            background: linear-gradient(180deg, var(--bg-card-solid) 0%, #0a0a0a 100%);
+
+        /* Diary Cards Styling */
+        .diary-card {
+            background-color: var(--bg-card);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 6px;
+            padding: 24px;
+            margin-bottom: 20px;
+            position: relative;
+            border: 1px solid rgba(255,255,255,0.03);
+            border-bottom: 1px solid var(--divider);
         }
-        .interactive-stat-row {
-            background: rgba(255,255,255,0.03); border: 1px solid var(--divider); border-radius: 8px;
-            padding: 15px; position: relative; overflow: hidden; cursor: crosshair;
-            transition: background 0.3s, border-color 0.3s;
+        .diary-date {
+            font-family: var(--font-display);
+            font-size: 12px;
+            color: #667788;
+            margin-bottom: 12px;
+            letter-spacing: 1px;
         }
-        .interactive-stat-row:hover {
-            background: rgba(255,255,255,0.08); border-color: var(--accent-orange);
+        .diary-content { display: flex; gap: 20px; }
+        .diary-details { flex-grow: 1; }
+        .diary-title { font-family: var(--font-display); font-size: 22px; color: var(--text-heading); margin-bottom: 4px; }
+        .diary-review { font-family: var(--font-mono); font-size: 14px; margin-top: 12px; color: #cbd5e1; white-space: pre-line; }
+
+        /* Interactive Phone Graphic Vector Module */
+        .interactive-vector-section {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+            margin: 60px 0;
+            background: rgba(31, 37, 53, 0.4);
+            border-radius: 12px;
+            padding: 30px;
+            border: 1px solid rgba(255,255,255,0.02);
         }
-        .stat-hidden {
-            font-family: var(--font-display); font-size: 28px; color: var(--text-heading);
-            transform: translateY(20px); opacity: 0; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        @media (max-width: 768px) {
+            .interactive-vector-section { flex-direction: column; text-align: center; }
         }
-        .stat-label { font-size: 12px; color: var(--text-body); transition: opacity 0.3s; }
+        .vector-phone-container {
+            width: 240px;
+            height: 440px;
+            background: #090d16;
+            border: 8px solid #2a3142;
+            border-radius: 32px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            flex-shrink: 0;
+        }
+        .vector-app-header {
+            height: 50px; background: #14181c; border-bottom: 1px solid rgba(255,255,255,0.05);
+            display: flex; align-items: center; justify-content: center;
+        }
+        .vector-app-logo {
+            width: 70px; height: 12px; background: rgba(255,255,255,0.2); border-radius: 2px;
+        }
+        .vector-hotspot {
+            width: 85%;
+            margin: 16px auto;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 8px;
+            padding: 14px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            text-align: left;
+        }
+        .vector-hotspot:hover {
+            background: rgba(255, 128, 0, 0.08);
+            border-color: rgba(255, 128, 0, 0.3);
+            transform: translateY(-2px);
+        }
+        .vector-hotspot-title {
+            font-size: 11px; font-family: var(--font-display); letter-spacing: 1px; color: #567;
+        }
+        .vector-hotspot-value {
+            font-size: 20px; font-family: var(--font-display); color: #FFF; font-weight: 700; margin-top: 2px;
+        }
+        .stats-display-panel {
+            flex-grow: 1;
+        }
+        .display-panel-title {
+            font-family: var(--font-display); font-size: 24px; color: #FFF; margin-bottom: 12px;
+        }
+        .display-panel-body {
+            font-size: 15px; color: var(--text-body); min-height: 80px;
+        }
+
+        /* Raya Custom Profile Section Layout */
+        .raya-profile-section {
+            background: linear-gradient(135deg, rgba(31,37,53,0.8) 0%, rgba(20,24,28,0.9) 100%);
+            border-radius: 12px;
+            padding: 35px;
+            border: 1px solid rgba(255,255,255,0.04);
+            margin: 40px 0;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+        }
+        .raya-meta-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 15px;
+            text-align: center;
+            margin: 25px 0 5px;
+            padding-top: 20px;
+            border-top: 1px solid var(--divider);
+        }
+        @media (max-width: 500px) { .raya-meta-grid { grid-template-columns: repeat(3, 1fr); } }
+        .raya-meta-item .num {
+            font-family: var(--font-display); font-size: 24px; color: #FFF; font-weight: 700;
+        }
+        .raya-meta-item .lbl {
+            font-size: 12px; color: #667788; text-transform: uppercase; font-family: var(--font-display); letter-spacing: 0.5px;
+        }
+
+        /* Scene 09 Custom Forms Styling */
+        .scene-09-container {
+            background: rgba(31, 37, 53, 0.8);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            padding: 35px;
+            border-radius: 8px;
+            max-width: 650px;
+            margin: 0 auto 50px;
+            border: 1px solid rgba(255,255,255,0.04);
+            box-shadow: 0 20px 45px rgba(0,0,0,0.4);
+        }
+        .input-dark {
+            width: 100%; background: rgba(20, 24, 28, 0.9); border: 1px solid #345; color: var(--text-heading);
+            padding: 14px; border-radius: 6px; font-family: var(--font-body); font-size: 16px; margin-bottom: 12px;
+            transition: border-color 0.2s;
+        }
+        .input-dark:focus { outline: none; border-color: var(--accent-orange); }
+        .tmdb-results {
+            position: absolute; width: calc(100% - 70px); background: #14181c; border: 1px solid #345;
+            border-top: none; max-height: 260px; overflow-y: auto; z-index: 120; border-radius: 0 0 6px 6px; display: none;
+        }
+        .tmdb-result-item { display: flex; gap: 12px; padding: 12px; cursor: pointer; border-bottom: 1px solid rgba(69,102,119,0.2); }
+        .tmdb-result-item:hover { background: #242f47; }
+        .tmdb-thumb { width: 42px; height: 62px; background: #345; object-fit: cover; border-radius: 3px; }
         
-        .interactive-stat-row:hover .stat-hidden { transform: translateY(0); opacity: 1; }
-        .interactive-stat-row:hover .stat-label { opacity: 0.5; }
-
-        /* Article / Essay Typography */
-        .essay-text {
-            font-size: 17px; line-height: 1.8; margin-bottom: 25px; font-weight: 300;
-        }
-        .pull-quote {
-            border-left: 2px solid var(--accent-orange);
-            padding-left: 20px; margin: 40px 0; font-style: italic; color: var(--text-heading); font-size: 18px;
-        }
-
-        /* Reviews Compare Update */
-        .reviews-compare { display: flex; gap: 20px; margin-top: 40px; flex-wrap: wrap; }
-        .review-compare-card { flex: 1; min-width: 280px; }
+        .state-b { display: none; }
+        .selected-film-card { display: flex; gap: 20px; margin-bottom: 20px; position: relative; }
+        .selected-poster { width: 84px; height: 126px; background: #345; border-radius: 4px; object-fit: cover; }
         
-        /* Live Feed specific */
-        .feed-entry { display: flex; gap: 15px; padding: 20px 0; border-bottom: 1px solid var(--divider); transition: background 0.3s; padding-left: 10px; border-radius: 6px; }
-        .feed-entry:hover { background: rgba(255,255,255,0.02); }
-        .feed-poster { width: 50px; height: 75px; flex-shrink: 0; border-radius: 4px; object-fit: cover; box-shadow: 0 4px 8px rgba(0,0,0,0.5); }
+        .interactive-stars { font-size: 26px; color: rgba(69, 102, 119, 0.4); cursor: pointer; display: inline-flex; margin-bottom: 15px; }
+        .interactive-stars span { padding: 0 3px; transition: color 0.15s, transform 0.15s; }
+        .interactive-stars span:hover { transform: scale(1.15); }
+        .interactive-stars span.active { color: var(--accent-orange); text-shadow: 0 0 10px rgba(255,128,0,0.4); }
+        
+        .textarea-dark { height: 130px; resize: none; font-family: var(--font-mono); }
+        
+        .submit-btn {
+            width: 100%; height: 50px; background: var(--accent-orange); color: #FFF; font-family: var(--font-display);
+            font-size: 20px; border: none; border-radius: 4px; cursor: pointer; letter-spacing: 1px; font-weight: 600;
+            transition: background 0.2s, transform 0.2s;
+        }
+        .submit-btn:hover { background: #ff9422; transform: translateY(-1px); }
+        
+        .flipper { transition: transform 0.6s; transform-style: preserve-3d; }
+        .flipped { transform: rotateY(180deg); }
+        .front, .back { backface-visibility: hidden; }
+        .back { position: absolute; top: 0; left: 0; width: 100%; height: 100%; transform: rotateY(180deg); display: flex; flex-direction: column; justify-content: center; align-items: center; background: #1f2535; border-radius: 6px; }
 
-        /* Footer */
-        .site-footer { margin-top: auto; padding: 40px 20px; font-size: 12px; color: var(--divider); text-align: center; border-top: 1px solid var(--divider); }
-        .site-footer a { color: var(--text-body); text-decoration: none; margin: 0 10px; transition: color 0.2s; text-transform: uppercase; letter-spacing: 1px;}
-        .site-footer a:hover { color: var(--badge-green); }
+        /* Timeline and Content Layouts */
+        .chart-svg { width: 100%; height: 100%; overflow: visible; }
+        .chart-line {
+            fill: none; stroke: var(--accent-orange); stroke-width: 3.5;
+            stroke-dasharray: 1000; stroke-dashoffset: 1000;
+            transition: stroke-dashoffset 2.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .stat-panel-c.revealed .chart-line { stroke-dashoffset: 0; }
+        .chart-grid { stroke: rgba(69, 102, 119, 0.2); stroke-width: 1; }
+        
+        /* Scene 10 Layout fixes */
+        .scene-10 { min-height: 100vh; background: #0a0a0a; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 60px 20px; }
+        .fade-text { font-size: clamp(24px, 5vw, 34px); color: var(--text-heading); opacity: 0; transition: opacity 2s cubic-bezier(0.16, 1, 0.3, 1); margin-bottom: 12px; }
+        .fade-subtext { font-family: var(--font-mono); font-size: 14px; color: var(--text-body); opacity: 0; transition: opacity 2s cubic-bezier(0.16, 1, 0.3, 1); margin-bottom: 6px; }
+        
+        .callback-card {
+            background: var(--bg-card-solid); padding: 25px; border-radius: 8px; margin: 30px 0; max-width: 440px; width: 100%;
+            display: none; opacity: 0; transition: opacity 2s; text-align: left; box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+        }
+        .final-stars { font-size: 32px; color: #FFF; margin-top: 30px; display: flex; gap: 10px; }
+        .final-stars span { transition: color 0.4s; }
+        .final-stars span.dark { color: #14181c; }
     </style>
 </head>
 <body>
     <div class="noise-overlay"></div>
-
-    <!-- Background Images for Texture -->
-    <div class="bg-img-container" style="height: 120vh;">
-        <img src="https://raw.githubusercontent.com/ruhundutta/letterboxd-story/e7bb126721f4e27078aca825db24a04a58e99180/mez2Z3WqlPKNXpi7mWoiiE5guE9.webp" class="bg-image" alt="">
+    
+    <!-- Ambient Canvas Blur elements -->
+    <div class="ambient-background">
+        <div class="bokeh-sphere bokeh-1"></div>
+        <div class="bokeh-sphere bokeh-2"></div>
+        <div class="bokeh-sphere bokeh-3"></div>
     </div>
 
-    <!-- Letterboxd Nav Bar -->
+    <!-- Letterboxd Nav Bar Interface -->
     <nav class="nav-bar">
-        <div class="nav-logo">
-            <img src="https://raw.githubusercontent.com/ruhundutta/letterboxd-story/e7bb126721f4e27078aca825db24a04a58e99180/letterboxd-icon.png" alt="Letterboxd">
-            <span style="font-family: var(--font-display); letter-spacing: 1px; font-size: 20px;">Letterboxd</span>
-        </div>
+        <a href="#" class="nav-logo">
+            <img src="https://raw.githubusercontent.com/ruhundutta/letterboxd-story/e7bb126721f4e27078aca825db24a04a58e99180/letterboxd-icon.png" alt="Logo">
+            <span>Letterboxd</span>
+        </a>
         <div class="nav-links">
-            <a href="#">FILMS</a>
-            <a href="#">MEMBERS</a>
-            <a href="#">JOURNAL</a>
-            <a href="#">SIGN IN</a>
+            <a href="#diary-section">DIARY</a>
+            <a href="#stats-section">STATS</a>
+            <a href="#community-section">COMMUNITY</a>
+            <a href="#review-section">LOG MOVIE</a>
         </div>
     </nav>
 
-    <!-- SCENE 01: COLD OPEN & LOGGING -->
+    <!-- SCENE 01: COLD OPEN -->
     <section class="scene-01">
         <div class="intro-text">
             <p>The credits are still rolling.</p>
@@ -394,250 +684,369 @@
             <p>You're not sure what yet.</p>
             <p>Your phone lights up.</p>
         </div>
+        <div class="phone-mockup" id="phoneMockup">
+            <div class="phone-stars" id="phoneStars">
+                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+            </div>
+            <div class="fake-review-area blinking-cursor" id="fakeReview"></div>
+        </div>
+        <div class="first-log-form">
+            <div class="first-log-label">YOUR FIRST LOG</div>
+            <textarea id="firstReviewInput" class="first-log-input" rows="2" placeholder="What did you just watch? Write something..."></textarea>
+            <div class="scroll-prompt">↓ scroll to begin tracking</div>
+        </div>
+    </section>
 
-        <!-- FORM NOW AT THE TOP -->
-        <div class="log-section-top glass-card" id="mainFormArea">
+    <!-- THE ACCOUNT HEADER -->
+    <section class="account-header reveal">
+        <div class="profile-top">
+            <div class="avatar-placeholder">L</div>
+            <div class="profile-info">
+                <h1>Letterboxd</h1>
+                <div class="profile-username">@letterboxd</div>
+                <div class="profile-bio">A social network for film. Est. 2011, Auckland NZ.</div>
+                <div class="stat-pills">
+                    <span class="pill grey">26M Members</span>
+                    <span class="pill grey">1B+ Films Logged</span>
+                    <span class="pill grey">100M+ Reviews</span>
+                </div>
+            </div>
+        </div>
+        <div class="tab-bar">
+            <span>FILMS</span>
+            <span class="active">DIARY</span>
+            <span>LISTS</span>
+            <span>STATS</span>
+            <span>FOLLOWING</span>
+        </div>
+    </section>
+
+    <!-- MOVIE ADDTION INTERACTIVE ENGINE SECTION (Moved Early) -->
+    <section id="review-section" class="container reveal reveal-up">
+        <div class="grid-header" style="text-align: center;">ADD TO DIARY ENGINE</div>
+        
+        <div class="scene-09-container">
             <div class="flipper" id="formFlipper">
                 <div class="front">
-                    <!-- STATE A: SEARCH -->
+                    <!-- STATE A: SEARCH INTERFACE -->
                     <div id="stateA">
-                        <div style="font-family:var(--font-display); font-size:14px; letter-spacing:1px; color:var(--text-body); margin-bottom:10px; text-transform:uppercase;">Log your film</div>
-                        <input type="text" id="tmdbSearch" class="input-dark" placeholder="Search for a film...">
+                        <div style="font-family:var(--font-display); font-size:12px; color:#667788; margin-bottom:6px; letter-spacing:1px;">LAST FILM WATCHED</div>
+                        <input type="text" id="tmdbSearch" class="input-dark" placeholder="Search for a film across global registers...">
                         <div class="tmdb-results" id="tmdbResults"></div>
                     </div>
                     
-                    <!-- STATE B: RATE & REVIEW -->
+                    <!-- STATE B: RATING + INTERACTIVE FORM -->
                     <div id="stateB" class="state-b">
                         <div class="selected-film-card">
                             <img src="" id="selectedPoster" class="selected-poster" alt="Poster">
-                            <div style="flex-grow: 1;">
-                                <h3 id="selectedTitle" style="color:#FFF; font-size:22px; margin-bottom:2px; line-height:1.2;">Title</h3>
+                            <div>
+                                <h3 id="selectedTitle" style="color:#FFF; font-size:20px; margin-bottom:4px;">Title</h3>
                                 <div id="selectedYear" style="color:var(--text-body); font-size:14px; margin-bottom:12px;">Year</div>
-                                <div class="stars interactive" id="interactiveStars">
+                                <div class="interactive-stars" id="interactiveStars">
                                     <span data-val="1">★</span><span data-val="2">★</span><span data-val="3">★</span><span data-val="4">★</span><span data-val="5">★</span>
                                 </div>
                             </div>
-                            <button class="close-btn" id="closeStateB">×</button>
+                            <button class="close-btn" id="closeStateB" style="color: #678; font-size: 20px;">✕</button>
                         </div>
                         
-                        <textarea id="reviewText" class="input-dark textarea-dark" placeholder="Add a review... or just a feeling."></textarea>
+                        <textarea id="reviewText" class="input-dark textarea-dark" placeholder="Add a quick insight, review or visceral raw feeling..."></textarea>
+                        <div class="char-count" id="charCount" style="text-align: right; font-size: 12px; color:#456; margin-top:-6px; margin-bottom:14px;">0 / 500</div>
                         
-                        <input type="text" id="reviewerName" class="input-dark" placeholder="Your name (optional)" style="margin-bottom: 15px;">
+                        <input type="text" id="reviewerName" class="input-dark" placeholder="Your signature (Leave blank to remain completely Anonymous)" style="margin-bottom: 20px;">
                         
                         <button class="submit-btn" id="submitBtn">LOG IT</button>
                     </div>
                 </div>
                 <div class="back" id="stateCConfirm">
-                    <div class="stars filled" id="confirmStars" style="font-size:28px; margin-bottom:10px; text-shadow: 0 0 10px var(--accent-orange);">★★★★</div>
-                    <div style="font-family:var(--font-display); font-size:28px; color:#FFF; text-transform:uppercase;">Logged.</div>
-                    <div style="color:var(--text-body); font-family:var(--font-mono); font-size:14px; margin-top:5px;">Your entry was sent to the feed below.</div>
+                    <div class="stars filled" id="confirmStars" style="font-size:26px; margin-bottom:12px;">★★★★</div>
+                    <div style="font-family:var(--font-display); font-size:24px; color:#FFF; letter-spacing:1px;">FILM REGISTERED.</div>
+                    <div style="color:var(--text-body); font-size:14px; margin-top:4px;">Your critical voice has joined the dashboard ecosystem.</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- STATE C: REALTIME ECOSYSTEM FEED -->
+        <div class="live-feed reveal reveal-up">
+            <div class="grid-header">LIVE METROPOLIS FEED</div>
+            <div id="feedContainer">
+                <div style="text-align:center; color:#456; padding:40px 0; font-family:var(--font-mono); font-style:italic;">Syncing live global cinema entries...</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ATMOSPHERIC VISUAL FADE STRIP -->
+    <div class="backdrop-strip reveal">
+        <img src="https://raw.githubusercontent.com/ruhundutta/letterboxd-story/e7bb126721f4e27078aca825db24a04a58e99180/mez2Z3WqlPKNXpi7mWoiiE5guE9.webp" alt="Backdrop Layer">
+    </div>
+
+    <!-- SCENE 02: FOUNDING ARCHIVES -->
+    <section id="diary-section" class="container reveal reveal-up">
+        <div class="grid-header">FOUNDING ENTRY</div>
+        <div class="diary-card">
+            <div class="diary-date">OCTOBER 2011</div>
+            <div class="diary-content">
+                <div class="poster-placeholder">
+                    <div class="clapperboard-icon"></div>
+                </div>
+                <div class="diary-details">
+                    <div class="diary-title">Beta Launch — Brooklyn Beta Conference</div>
+                    <div class="stars filled">★★★<span style="color:rgba(69,102,119,0.3)">★★</span></div>
+                    <div class="diary-review">Matthew used Flickr for photos. Last.fm for music.
+There was no equivalent for film.
+So he built one.</div>
+                </div>
+            </div>
+        </div>
+        <div class="pull-quote reveal reveal-up">
+            "The hardest part was building something that had never existed before. There was no playbook."<br>
+            <span style="font-size:13px; text-transform:uppercase; letter-spacing:1px; color:#678; font-style:normal; margin-top:6px; display:block;">— Matthew Buchanan, Co-founder</span>
+        </div>
+    </section>
+
+    <!-- SCENE 03: TIMELINE ARCHITECTURE -->
+    <section class="container">
+        <div class="grid-header">CHRONO DIARY FEED</div>
+        
+        <div class="diary-card reveal reveal-right">
+            <div class="diary-date">NOV 2011</div>
+            <div class="diary-content">
+                <div class="poster-placeholder" style="background-image: url('https://raw.githubusercontent.com/ruhundutta/letterboxd-story/e7bb126721f4e27078aca825db24a04a58e99180/yihdXomYb5kTeSivtFndMy5iDmf.webp');"></div>
+                <div class="diary-details">
+                    <div class="diary-title">Beta Milestones</div>
+                    <div class="stars filled">★★★<span style="color:rgba(69,102,119,0.3)">★★</span></div>
+                    <div class="diary-review">Small web conference in Brooklyn. Nobody's heard of us yet. That's fine.</div>
                 </div>
             </div>
         </div>
 
-        <div class="scroll-prompt">Scroll to explore the territory ↓</div>
+        <div class="diary-card reveal reveal-right" style="transition-delay: 0.1s;">
+            <div class="diary-date">FEB 2013</div>
+            <div class="diary-content">
+                <div class="poster-placeholder" style="background-image: url('https://raw.githubusercontent.com/ruhundutta/letterboxd-story/e7bb126721f4e27078aca825db24a04a58e99180/qQclTgLMDvGBuUBFGHRipxkEwWR.webp');"></div>
+                <div class="diary-details">
+                    <div class="diary-title">Public Launch Window</div>
+                    <div class="stars filled">★★★★<span style="color:rgba(69,102,119,0.3)">★</span></div>
+                    <div class="diary-review">Open to everyone. The cinephiles found us immediately. The interface handles the scale fluidly.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="diary-card reveal reveal-right" style="transition-delay: 0.2s;">
+            <div class="diary-date">MAR 2020 <span class="pill green" style="float:right;">TURNING POINT</span></div>
+            <div class="diary-content">
+                <div class="poster-placeholder" style="background-image: url('https://raw.githubusercontent.com/ruhundutta/letterboxd-story/e7bb126721f4e27078aca825db24a04a58e99180/devil_wears_prada_two_ver7.jpg');"></div>
+                <div class="diary-details">
+                    <div class="diary-title">The Quarantine Spike</div>
+                    <div class="stars filled">★★★★½</div>
+                    <div class="diary-review">1.8 million members. The world just locked down. People needed somewhere to anchor their absolute isolation and feelings about moving images.</div>
+                </div>
+            </div>
+        </div>
     </section>
 
-    <!-- RAYA PROFILE (Replaces Scene 05) -->
-    <section class="container reveal reveal-up">
-        <div class="raya-profile glass-card">
-            <div class="profile-header-custom">
-                <img src="https://raw.githubusercontent.com/ruhundutta/letterboxd-story/e7bb126721f4e27078aca825db24a04a58e99180/avtr-0-1000-0-1000-crop.jpg" class="raya-avatar" alt="Raya">
-                <div>
-                    <h2 style="font-size: 28px; margin-bottom: 2px;">Raya</h2>
-                    <div style="color:var(--text-body); font-size:13px; font-family:var(--font-mono);">@raya_cinephile</div>
-                    <div style="margin-top: 8px;">
-                        <span class="pill grey" style="font-size:10px;">PRO</span>
-                        <span style="font-size:12px; margin-left:10px; color:var(--text-body);">1,245 Films</span>
+    <!-- ATMOSPHERIC FADED BACKGROUND STRIP -->
+    <div class="backdrop-strip reveal">
+        <img src="https://raw.githubusercontent.com/ruhundutta/letterboxd-story/e7bb126721f4e27078aca825db24a04a58e99180/image_1750346724128.jpg" alt="Atmospheric Strip">
+    </div>
+
+    <!-- SCENE 04: METRICS & INTERACTIVE VECTOR GRAPHIC SECTION -->
+    <section id="stats-section" class="container reveal">
+        <div class="grid-header">ANALYTICS ENGINE</div>
+        
+        <div class="stats-grid">
+            <div class="stat-panel-a reveal reveal-up">
+                <div class="giant-number">17,000,000</div>
+                <div style="color:#678; font-size:13px; letter-spacing:1px; text-transform:uppercase; margin-top:4px;">Global Actives Registered</div>
+                <div class="demographic-bar">
+                    <div class="demo-segment" style="width: 45%; background: var(--accent-orange);" title="Age bracket 18-24"></div>
+                    <div class="demo-segment" style="width: 35%; background: var(--brand-red);" title="Age bracket 25-35"></div>
+                    <div class="demo-segment" style="width: 20%; background: #3c485e;" title="Age bracket 35+"></div>
+                </div>
+                <div class="demo-labels">
+                    <span>GEN-Z CORE (45%)</span>
+                    <span>MILLENNIALS (35%)</span>
+                    <span>ARCHIVE VETS (20%)</span>
+                </div>
+            </div>
+
+            <!-- INTERACTIVE VECTOR PHONE METRIC GRAPHIC MODULE -->
+            <div class="interactive-vector-section reveal reveal-up">
+                <div class="vector-phone-container">
+                    <div class="vector-app-header">
+                        <div class="vector-app-logo"></div>
+                    </div>
+                    <div class="vector-hotspot" data-info="Daily transaction pipeline tracking: over 1,200,000 films are parsed, checked, rated, and appended to user timelines every single 24 hours.">
+                        <div class="vector-hotspot-title">DAILY DISPATCH</div>
+                        <div class="vector-hotspot-value">1.2M logs</div>
+                    </div>
+                    <div class="vector-hotspot" data-info="The cumulative database repository has crossed 100 Million critical reviews, creating the largest user-generated dataset of film critique on earth.">
+                        <div class="vector-hotspot-title">CRITIQUE VOLUME</div>
+                        <div class="vector-hotspot-value">100M+ reviews</div>
+                    </div>
+                    <div class="vector-hotspot" data-info="Curation velocity: User-generated manifestos, retrospectives, and theme catalogues grow dynamically by 8 million lists globally.">
+                        <div class="vector-hotspot-title">LIST ARCHIVES</div>
+                        <div class="vector-hotspot-value">8M+ compiled</div>
                     </div>
                 </div>
-            </div>
-
-            <div class="grid-header">
-                <span>Favorite Films</span>
-                <span style="font-size:10px; color:var(--divider);">ALL TIME</span>
-            </div>
-            <div class="posters-grid-4">
-                <div class="poster-item">
-                    <img src="https://raw.githubusercontent.com/ruhundutta/letterboxd-story/e7bb126721f4e27078aca825db24a04a58e99180/51634-my-own-private-idaho-0-2000-0-3000-crop.jpg" alt="My Own Private Idaho">
-                </div>
-                <div class="poster-item">
-                    <img src="https://raw.githubusercontent.com/ruhundutta/letterboxd-story/e7bb126721f4e27078aca825db24a04a58e99180/361719-god-s-own-country-0-2000-0-3000-crop.jpg" alt="God's Own Country">
-                </div>
-                <div class="poster-item">
-                    <img src="https://raw.githubusercontent.com/ruhundutta/letterboxd-story/e7bb126721f4e27078aca825db24a04a58e99180/328538-the-florida-project-0-2000-0-3000-crop.jpg" alt="The Florida Project">
-                </div>
-                <div class="poster-item">
-                    <img src="https://raw.githubusercontent.com/ruhundutta/letterboxd-story/e7bb126721f4e27078aca825db24a04a58e99180/18951-hum-aapke-hain-koun-0-2000-0-3000-crop.jpg" alt="Hum Aapke Hain Koun">
+                <div class="stats-display-panel">
+                    <div class="display-panel-title" id="vectorPanelTitle">INTERACTIVE CONSOLE</div>
+                    <div class="display-panel-body" id="vectorPanelBody">Hover over individual application vectors on the smartphone graphic matrix to query exact runtime telemetry.</div>
                 </div>
             </div>
 
-            <div class="grid-header">
-                <span>Recent Activity</span>
-                <a href="#" style="font-size:10px; color:var(--text-body); text-decoration:none;">MORE</a>
-            </div>
-            <div class="posters-grid-5">
-                <div>
-                    <div class="poster-item"><img src="https://raw.githubusercontent.com/ruhundutta/letterboxd-story/e7bb126721f4e27078aca825db24a04a58e99180/Obsession.jpg" alt="Obsession"></div>
-                    <div class="activity-meta"><span>★★★★</span> <span class="heart-icon">♥</span></div>
-                </div>
-                <div>
-                    <div class="poster-item"><img src="https://raw.githubusercontent.com/ruhundutta/letterboxd-story/e7bb126721f4e27078aca825db24a04a58e99180/Michael.jpg" alt="Michael"></div>
-                    <div class="activity-meta"><span>★★★½</span></div>
-                </div>
-                <div>
-                    <div class="poster-item"><img src="https://raw.githubusercontent.com/ruhundutta/letterboxd-story/e7bb126721f4e27078aca825db24a04a58e99180/DevilWearsPrada2.jpg" alt="Devil Wears Prada"></div>
-                    <div class="activity-meta"><span>★★★★★</span> <span class="heart-icon">♥</span></div>
-                </div>
-                <div>
-                    <div class="poster-item"><img src="https://raw.githubusercontent.com/ruhundutta/letterboxd-story/e7bb126721f4e27078aca825db24a04a58e99180/1197499-marty-supreme-0-2000-0-3000-crop.jpg" alt="Marty Supreme"></div>
-                    <div class="activity-meta"><span style="color:var(--badge-green)">↻</span> <span>★★★★</span></div>
-                </div>
-                <div>
-                    <div class="poster-item"><img src="https://raw.githubusercontent.com/ruhundutta/letterboxd-story/e7bb126721f4e27078aca825db24a04a58e99180/1196911-wuthering-heights-2026-0-2000-0-3000-crop.jpg" alt="Wuthering Heights"></div>
-                    <div class="activity-meta"><span>★★</span></div>
-                </div>
+            <div class="stat-panel-c reveal reveal-up" style="background: rgba(31,37,53,0.5); padding: 25px; border-radius: 8px; height: 260px;">
+                <div style="font-family:var(--font-display); margin-bottom:15px; color:#FFF; font-size:14px; letter-spacing:1px;">GROWTH EXPONENT MATRIX</div>
+                <svg class="chart-svg" viewBox="0 0 500 150" preserveAspectRatio="none">
+                    <line x1="0" y1="120" x2="500" y2="120" class="chart-grid" />
+                    <line x1="0" y1="60" x2="500" y2="60" class="chart-grid" />
+                    <line x1="250" y1="0" x2="250" y2="130" style="stroke:rgba(255,255,255,0.15); stroke-width:1; stroke-dasharray:4;" />
+                    <text x="255" y="18" fill="#678" style="font-size:11px; font-family:var(--font-body);">GLOBAL QUARANTINE PIN</text>
+                    <path d="M 0 130 Q 120 125 180 115 T 270 70 T 380 40 T 500 12" class="chart-line" />
+                    <text x="0" y="145" fill="#567" style="font-size:11px;">2011</text>
+                    <text x="238" y="145" fill="#567" style="font-size:11px;">2020</text>
+                    <text x="475" y="145" fill="#567" style="font-size:11px;">2026</text>
+                </svg>
             </div>
         </div>
-        
-        <p style="text-align:center; margin-top:30px; font-style:italic; font-size:14px;">Every profile is a performance. Some are just more honest about it.</p>
     </section>
 
-    <div class="divider"></div>
+    <!-- ATMOSPHERIC VISUAL STRIP -->
+    <div class="backdrop-strip reveal">
+        <img src="https://raw.githubusercontent.com/ruhundutta/letterboxd-story/e7bb126721f4e27078aca825db24a04a58e99180/cccXiN28CPjcMVhji5LnogF4Njp.webp" alt="Visual Canvas Fade">
+    </div>
 
-    <!-- ESSAY & STATS INTERACTIVITY -->
-    <section class="container reveal reveal-up">
-        
-        <!-- Faded secondary background -->
-        <div class="bg-img-container" style="top: auto; bottom: 0; height: 100vh;">
-            <img src="https://raw.githubusercontent.com/ruhundutta/letterboxd-story/e7bb126721f4e27078aca825db24a04a58e99180/cccXiN28CPjcMVhji5LnogF4Njp.webp" class="bg-image" style="opacity:0.1" alt="">
+    <!-- CUSTOM USER GRID ENGINE DISPLAY MODAL -->
+    <section id="community-section" class="container reveal">
+        <!-- CUSTOM REQUISITE: FAVORITE FILMS GRID (4 columns layout) -->
+        <div class="grid-header">FAVORITE FILMS SHIFT</div>
+        <div class="poster-grid grid-4-col">
+            <div class="poster-card"><img src="https://raw.githubusercontent.com/ruhundutta/letterboxd-story/e7bb126721f4e27078aca825db24a04a58e99180/aJrG7OkoTMPWG5c8opz8a93AZPY.webp" alt="Poster Component"></div>
+            <div class="poster-card"><img src="https://raw.githubusercontent.com/ruhundutta/letterboxd-story/e7bb126721f4e27078aca825db24a04a58e99180/Thelma%20%26%20Louise%20(1991).png" alt="Poster Component"></div>
+            <div class="poster-card"><img src="https://raw.githubusercontent.com/ruhundutta/letterboxd-story/e7bb126721f4e27078aca825db24a04a58e99180/The%20Devil%20Wears%20Prada%20(2006).jpg" alt="Poster Component"></div>
+            <div class="poster-card"><img src="https://raw.githubusercontent.com/ruhundutta/letterboxd-story/e7bb126721f4e27078aca825db24a04a58e99180/Shrek%202%20(2004).png" alt="Poster Component"></div>
         </div>
 
-        <h2 style="font-size: clamp(32px, 5vw, 54px); text-align: center; margin-bottom: 10px; text-shadow: 0 2px 10px #000;">THE MAP EATS THE TERRITORY</h2>
-        <div style="text-align:center; font-family:var(--font-mono); font-size:13px; color:var(--accent-orange); margin-bottom:40px;">COMMUNITY • DISCOVERY • VALUE CAPTURE</div>
-        
-        <p class="essay-text">Before, film criticism belonged to the gatekeepers. The broadsheet critics, the academics, the festival elites. Then came a platform that flattened the hierarchy. Everyone is a critic now. The irreverent one-liner shares the same screen space as the 1,500-word academic essay.</p>
-        
-        <div class="reviews-compare">
-            <div class="glass-card review-compare-card">
-                <div style="display:flex; justify-content:space-between; border-bottom:1px solid var(--divider); padding-bottom:10px; margin-bottom:15px;">
-                    <strong style="color:#FFF">The Devil Wears Prada</strong>
-                    <span class="stars filled" style="font-size:14px;">★★★★★</span>
+        <!-- CUSTOM REQUISITE: RECENT ACTIVITY GRID (5 columns layout with micro metadata strings) -->
+        <div class="grid-header">RECENT ACTIVITY TELEMETRY</div>
+        <div class="poster-grid grid-5-col">
+            <div>
+                <div class="poster-card"><img src="https://raw.githubusercontent.com/ruhundutta/letterboxd-story/e7bb126721f4e27078aca825db24a04a58e99180/Past%20Lives%20(2023).png" alt="Poster"></div>
+                <div class="card-metadata"><span class="stars filled">★★★★★</span><span class="heart-icon">♥</span></div>
+            </div>
+            <div>
+                <div class="poster-card"><img src="https://raw.githubusercontent.com/ruhundutta/letterboxd-story/e7bb126721f4e27078aca825db24a04a58e99180/Obsession.jpg" alt="Poster"></div>
+                <div class="card-metadata"><span class="stars filled">★★★★</span><span class="heart-icon">♥</span></div>
+            </div>
+            <div>
+                <div class="poster-card"><img src="https://raw.githubusercontent.com/ruhundutta/letterboxd-story/e7bb126721f4e27078aca825db24a04a58e99180/Michael.jpg" alt="Poster"></div>
+                <div class="card-metadata"><span class="stars filled">★★★★½</span><span class="heart-icon">♥</span></div>
+            </div>
+            <div>
+                <div class="poster-card"><img src="https://raw.githubusercontent.com/ruhundutta/letterboxd-story/e7bb126721f4e27078aca825db24a04a58e99180/DevilWearsPrada2.jpg" alt="Poster"></div>
+                <div class="card-metadata"><span class="stars filled">★★★</span><span class="heart-icon">♥</span></div>
+            </div>
+            <div>
+                <div class="poster-card"><img src="https://raw.githubusercontent.com/ruhundutta/letterboxd-story/e7bb126721f4e27078aca825db24a04a58e99180/Ace%20Ventura-%20Pet%20Detective%20(1994).png" alt="Poster"></div>
+                <div class="card-metadata"><span class="stars filled">★★★★</span><span class="heart-icon">♥</span></div>
+            </div>
+        </div>
+
+        <!-- RAYA CUSTOM PROFILE INTERFACE INCORPORATION -->
+        <div class="grid-header" style="margin-top: 50px;">NETWORK CORE PROFILE</div>
+        <div class="raya-profile-section reveal reveal-up">
+            <div style="display:flex; align-items:center; gap:20px;">
+                <img src="https://raw.githubusercontent.com/ruhundutta/letterboxd-story/e7bb126721f4e27078aca825db24a04a58e99180/avtr-0-1000-0-1000-crop.jpg" alt="Raya" style="width:72px; height:72px; border-radius:50%; object-fit:cover; border:2px solid var(--accent-orange);">
+                <div>
+                    <h3 style="color:#FFF; font-size:24px; text-transform:none;">Raya</h3>
+                    <div style="color:#678; font-size:14px;">@raya_cinema</div>
                 </div>
-                <div style="font-family:var(--font-mono); font-size:13px; margin-bottom:15px;">"cerulean is a state of mind"</div>
-                <div style="font-size:11px; color:var(--divider);">♥ 12,408 Likes</div>
             </div>
             
-            <div class="glass-card review-compare-card">
-                <div style="display:flex; justify-content:space-between; border-bottom:1px solid var(--divider); padding-bottom:10px; margin-bottom:15px;">
-                    <strong style="color:#FFF">The Devil Wears Prada</strong>
-                    <span class="stars filled" style="font-size:14px;">★★★★★</span>
-                </div>
-                <div style="font-family:var(--font-mono); font-size:13px; margin-bottom:15px;">"A fascinating critique of late-stage capitalism masquerading within the tropes of a conventional 2000s workplace comedy..."</div>
-                <div style="font-size:11px; color:var(--divider);">♥ 14 Likes</div>
+            <div class="raya-meta-grid">
+                <div class="raya-meta-item"><div class="num">240</div><div class="lbl">FILMS</div></div>
+                <div class="raya-meta-item"><div class="num">25</div><div class="lbl">THIS YEAR</div></div>
+                <div class="raya-meta-item"><div class="num">8</div><div class="lbl">LISTS</div></div>
+                <div class="raya-meta-item"><div class="num">205</div><div class="lbl">FOLLOWING</div></div>
+                <div class="raya-meta-item"><div class="num">126</div><div class="lbl">FOLLOWERS</div></div>
             </div>
-        </div>
 
-        <p class="essay-text" style="margin-top: 40px;">Philosopher C. Thi Nguyen describes a phenomenon called "value capture." It happens when we take a rich, complex, unquantifiable value — like the love of cinema — and replace it with a simplified metric. Over time, we stop optimising for the experience itself. We start optimising for the metric.</p>
-
-        <!-- Interactive Stats Mobile Mockup -->
-        <div class="mobile-mockup-container reveal reveal-up">
-            <div class="mobile-device">
-                <div class="mobile-notch"></div>
-                <div class="mobile-screen">
-                    <div style="text-align:center; font-family:var(--font-display); font-size:18px; color:#FFF; margin: 10px 0 20px;">Hover to Inspect</div>
-                    
-                    <div class="interactive-stat-row">
-                        <div class="stat-label">Total Films Logged</div>
-                        <div class="stat-hidden" style="color:var(--badge-green)">1 Billion+</div>
-                    </div>
-                    
-                    <div class="interactive-stat-row">
-                        <div class="stat-label">Total Members</div>
-                        <div class="stat-hidden" style="color:var(--accent-orange)">17 Million</div>
-                    </div>
-                    
-                    <div class="interactive-stat-row">
-                        <div class="stat-label">Reviews Written</div>
-                        <div class="stat-hidden" style="color:#FFF">100M+</div>
-                    </div>
-                    
-                    <div class="interactive-stat-row">
-                        <div class="stat-label">Why are you really watching this?</div>
-                        <div class="stat-hidden" style="font-size:16px; font-family:var(--font-mono); color:var(--brand-red); margin-top:5px;">To hit 1,000 films this year.</div>
-                    </div>
-                </div>
+            <div style="font-family:var(--font-display); font-size:11px; color:#567; letter-spacing:1px; margin-top:20px; margin-bottom:10px; text-transform:uppercase;">RAYA'S TOP FOUR</div>
+            <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:10px;">
+                <div class="poster-card" style="box-shadow:none;"><img src="https://raw.githubusercontent.com/ruhundutta/letterboxd-story/e7bb126721f4e27078aca825db24a04a58e99180/51634-my-own-private-idaho-0-2000-0-3000-crop.jpg" alt="Idaho"></div>
+                <div class="poster-card" style="box-shadow:none;"><img src="https://raw.githubusercontent.com/ruhundutta/letterboxd-story/e7bb126721f4e27078aca825db24a04a58e99180/361719-god-s-own-country-0-2000-0-3000-crop.jpg" alt="Country"></div>
+                <div class="poster-card" style="box-shadow:none;"><img src="https://raw.githubusercontent.com/ruhundutta/letterboxd-story/e7bb126721f4e27078aca825db24a04a58e99180/328538-the-florida-project-0-2000-0-3000-crop.jpg" alt="Florida"></div>
+                <div class="poster-card" style="box-shadow:none;"><img src="https://raw.githubusercontent.com/ruhundutta/letterboxd-story/e7bb126721f4e27078aca825db24a04a58e99180/18951-hum-aapke-hain-koun-0-2000-0-3000-crop.jpg" alt="Hum Aapke"></div>
             </div>
-        </div>
-
-        <div class="pull-quote reveal reveal-up">
-            "Director Ti West submitted his Sight & Sound ballot. He put Jaws and Citizen Kane. The internet tore him apart. Why? Because they were deemed 'too basic'. He wasn't performing enough cinephilic obscurity."
-        </div>
-        
-    </section>
-
-    <div class="divider"></div>
-
-    <!-- LIVE COMMUNITY FEED (Moved to Bottom) -->
-    <section class="container reveal reveal-up">
-        
-        <!-- Faded background for feed -->
-        <div class="bg-img-container" style="top: auto; bottom: 0; height: 100vh;">
-            <img src="https://raw.githubusercontent.com/ruhundutta/letterboxd-story/e7bb126721f4e27078aca825db24a04a58e99180/anora%201.jpg" class="bg-image" style="opacity:0.1" alt="">
-        </div>
-
-        <div class="grid-header" style="border-bottom-width: 2px;">
-            <span style="font-size: 20px; font-family:var(--font-display); letter-spacing:2px; color:#FFF;">FROM THE FEED</span>
-            <span style="font-size:12px; color:var(--badge-green);">LIVE UPDATES</span>
-        </div>
-        <div style="color:var(--text-body); font-size:13px; margin:5px 0 25px;">What the community (including you) is watching right now.</div>
-        
-        <div id="feedContainer" class="glass-card" style="min-height: 200px; padding: 10px 20px;">
-            <div style="text-align:center; color:var(--divider); padding:40px 0; font-family:var(--font-mono); font-style:italic;">Loading community logs...</div>
         </div>
     </section>
 
-    <!-- SCENE 10: THE CLOSE -->
-    <section class="scene-01 reveal" style="padding-top: 0; min-height: 80vh;">
-        <div class="fade-text intro-text">
-            <p id="closeText1" style="font-size: clamp(20px, 4vw, 32px); font-weight: 400; opacity: 0; transition: opacity 2s;">The silence after the credits</p>
-            <p id="closeText2" style="font-size: clamp(20px, 4vw, 32px); font-weight: 400; opacity: 0; transition: opacity 2s;">is not dead time.</p>
-            <p id="closeText3" style="margin-top:20px; font-weight:700; opacity: 0; transition: opacity 2s;">It is the film still happening inside you.</p>
-        </div>
+    <!-- SCENE 06 & 07: ESSAY MATRIX -->
+    <section class="container reveal reveal-up" style="max-width: 740px;">
+        <div class="grid-header">ESSAY MANIFESTO</div>
+        <h2 style="font-size: clamp(30px, 6vw, 44px); text-align: center; margin-bottom: 8px;">THE QUANTIFICATION OF LOVE</h2>
         
-        <div style="height:40px;"></div>
+        <p style="margin-bottom:24px; color:#cbd5e1; font-size:17px; line-height:1.8;">Philosopher C. Thi Nguyen describes a phenomenon called <strong>value capture</strong>. It happens when we take a rich, complex, unquantifiable human value—like a visceral connection to cinema—and replace it with a simplified metric ecosystem. Over time, we stop optimizing for the transformative art experience itself. We start tracking, logging, and performance-tuning the score metric matrix.</p>
         
-        <div style="font-family:var(--font-mono); font-size:13px; color:var(--text-body); display:flex; flex-direction:column; gap:8px;">
-            <div id="closeSub1" style="opacity: 0; transition: opacity 2s;">You can't give that five stars.</div>
-            <div id="closeSub2" style="opacity: 0; transition: opacity 2s;">But you can notice it.</div>
-            <div id="closeSub3" style="opacity: 0; transition: opacity 2s;">And noticing it — carefully, repeatedly —</div>
-            <div id="closeSub4" style="opacity: 0; transition: opacity 2s; color:#FFF;">is what cinephilia actually is.</div>
-        </div>
-        
-        <div class="glass-card" id="callbackCard" style="display:none; opacity:0; transition:opacity 2s; margin-top:50px; text-align:left; width:100%; max-width:500px;">
-            <div style="font-family:var(--font-display); font-size:14px; letter-spacing:1px; color:var(--badge-green); margin-bottom:10px; text-transform:uppercase;">
-                You wrote this at the beginning.
+        <div class="slider-container">
+            <div class="slider-label">Why did you watch your last film?</div>
+            <div class="slider-poles">
+                <span>pure aesthetic connection</span>
+                <span>to update the ledger metrics</span>
             </div>
-            <div class="stars filled" style="font-size:16px;">★★★★★</div>
-            <div id="callbackText" style="font-family:var(--font-mono); font-size:15px; margin-top:10px; color:#FFF; white-space:pre-line;"></div>
+            <input type="range" id="valueSlider" min="0" max="100" value="50">
+            <div class="slider-response" id="sliderResponse">Sounds about right.</div>
         </div>
-        
     </section>
 
-    <footer class="site-footer" id="siteFooter">
-        <div style="margin-bottom: 10px;">ROHAN DUTTA, RAJKUMAR, ARPIT YADAV: MA COMMUNICATION, MEDIA PORTFOLIO PROJECT</div>
-        <div style="margin-bottom: 20px;">UNIVERSITY OF HYDERABAD · 2026</div>
-        <div>
-            <!-- LINK: Portfolio pieces -->
-            <a href="#">Voxpop</a> • 
-            <a href="#">Podcast</a> • 
-            <a href="#">Video Essay</a>
-        </div>
-    </footer>
+    <!-- BACKDROP CANVAS SECTION -->
+    <div class="backdrop-strip reveal">
+        <img src="https://raw.githubusercontent.com/ruhundutta/letterboxd-story/e7bb126721f4e27078aca825db24a04a58e99180/anora%201.jpg" alt="Atmospheric Layer Fade">
+    </div>
 
-    <!-- JAVASCRIPT -->
+    <!-- SCENE 10: THE CLOSE (OUTRO MATRIX WITH LOG RETRIEVAL) -->
+    <section class="scene-10 reveal">
+        <div class="fade-text" id="closeText1">The silence after the credits</div>
+        <div class="fade-text" id="closeText2">is not dead runtime.</div>
+        <div class="fade-text" id="closeText3" style="margin-top:20px; font-weight:700; color:var(--accent-orange);">It is the film still processing inside you.</div>
+        
+        <div style="height:30px;"></div>
+        
+        <div class="fade-subtext" id="closeSub1">You can't collapse that into five stars.</div>
+        <div class="fade-subtext" id="closeSub2">But you can notice it carefully.</div>
+        <div class="fade-subtext" id="closeSub3">And noticing it—without metric validation—</div>
+        <div class="fade-subtext" id="closeSub4">is where actual cinema lives.</div>
+        
+        <!-- INITIAL ENTRY RETRIEVAL CALLBACK DEVICE -->
+        <div class="callback-card" id="callbackCard">
+            <div style="font-family:var(--font-display); font-size:12px; color:#678; margin-bottom:12px; text-transform:uppercase; letter-spacing:1px;">
+                Ecosystem Callback Device<br>
+                Your initial submission trace gathered at startup:
+            </div>
+            <div class="stars filled">★★★★★</div>
+            <div id="callbackText" style="font-family:var(--font-mono); font-size:14px; margin-top:12px; color:#f8fafc; white-space:pre-line;"></div>
+            
+            <textarea class="input-dark textarea-dark" style="margin-top:30px; background:transparent; border-color:#2a3142; height:85px; font-size:13px;" placeholder="What would your profile state say now?"></textarea>
+            <div style="font-size:10px; color:#456; text-align:right; margin-top:4px;">(this transaction log remains yours alone)</div>
+        </div>
+        
+        <div class="final-stars" id="finalStars">
+            <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
+        </div>
+        
+        <footer class="site-footer" id="siteFooter">
+            <div style="font-weight: 600; color:#cbd5e1;">Rohan Dutta, Rajkumar, Arpit Yadav</div>
+            <div style="font-size:11px; letter-spacing:1px; margin-top:2px;">MA Communication, Media Portfolio Project · University of Hyderabad · 2026</div>
+            <div style="margin-top:14px; display:flex; gap:15px; justify-content:center;">
+                <a href="#" class="placeholder-link">Voxpop Component</a>
+                <a href="#" class="placeholder-link">Podcast Deck</a>
+                <a href="#" class="placeholder-link">Video Essay Edit</a>
+            </div>
+        </footer>
+    </section>
+
+    <!-- SYSTEM CORE CONTROLLER ARCHITECTURE -->
     <script>
-        // GLOBALS
+        // ECOSYSTEM GLOBAL STATES
         let userFirstReview = "";
         let selectedFilm = null;
         let userRating = 0;
@@ -645,25 +1054,67 @@
         const TMDB_API_KEY = 'e7436aeaa869794362bd07b30969c95d'; 
         const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxrcfdSlLCAspEYFl0k8QunT3PiK32CurNGBJqxP60oasjQtulq9HL6iLCoZk3M_yyQ1w/exec';
 
-        // INTERSECTION OBSERVER FOR REVEALS
+        // REVEAL ENGINE INTERSECTION OBSERVER
         const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('revealed');
-                    if (entry.target.id === 'callbackCard' || entry.target.classList.contains('scene-01')) {
-                        // For the final scene
-                        if (entry.target.querySelector('#closeText1')) {
-                            startCloseSequence();
-                        }
-                    }
+                    if (entry.target.classList.contains('scene-10')) startCloseSequence();
                     revealObserver.unobserve(entry.target);
                 }
             });
-        }, { threshold: 0.15 });
+        }, { threshold: 0.1 });
 
         document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-        // TMDB SEARCH & FORM
+        // MOBILE APP GRAPHIC HOTSPOT ENGINE
+        document.querySelectorAll('.vector-hotspot').forEach(hotspot => {
+            hotspot.addEventListener('mouseenter', (e) => {
+                const title = e.currentTarget.querySelector('.vector-hotspot-title').innerText;
+                const telemetry = e.currentTarget.getAttribute('data-info');
+                document.getElementById('vectorPanelTitle').innerText = title;
+                document.getElementById('vectorPanelBody').innerText = telemetry;
+            });
+            hotspot.addEventListener('mouseleave', () => {
+                document.getElementById('vectorPanelTitle').innerText = "INTERACTIVE CONSOLE";
+                document.getElementById('vectorPanelBody').innerText = "Hover over individual application vectors on the smartphone graphic matrix to query exact runtime telemetry.";
+            });
+        });
+
+        // SCENE 01 STARTUP ANIMATION TRIGGER
+        setTimeout(() => {
+            const stars = document.querySelectorAll('#phoneStars span');
+            stars.forEach((star, i) => {
+                setTimeout(() => { 
+                    star.style.color = '#FF8000'; 
+                    star.style.textShadow = '0 0 12px rgba(255,128,0,0.8)';
+                }, i * 400);
+            });
+            setTimeout(() => {
+                document.getElementById('fakeReview').style.opacity = '1';
+                document.getElementById('fakeReview').innerText = "Analyzing processing traces...";
+            }, 2400);
+        }, 6000);
+
+        document.getElementById('firstReviewInput').addEventListener('input', (e) => {
+            userFirstReview = e.target.value;
+        });
+
+        // VALUE SLIDER METRIC CONTROLLER
+        const slider = document.getElementById('valueSlider');
+        const sliderRes = document.getElementById('sliderResponse');
+        slider.addEventListener('input', (e) => {
+            const val = e.target.value;
+            sliderRes.style.opacity = '0';
+            setTimeout(() => {
+                if (val < 33) sliderRes.innerText = "Hold onto that aesthetic connection.";
+                else if (val < 66) sliderRes.innerText = "Metric alignment in steady balancing parameters.";
+                else sliderRes.innerText = "Value capture detected. You are optimizing for the platform registry.";
+                sliderRes.style.opacity = '1';
+            }, 120);
+        });
+
+        // TMDB REGISTRY SEARCH CONTROLLER ENGINE
         const searchInput = document.getElementById('tmdbSearch');
         const resultsDiv = document.getElementById('tmdbResults');
         let searchTimeout;
@@ -689,29 +1140,21 @@
                                 item.innerHTML = `
                                     <img src="${imgPath}" class="tmdb-thumb">
                                     <div>
-                                        <div style="color:#FFF; font-family:var(--font-display); font-size:16px;">${movie.title}</div>
-                                        <div style="color:var(--text-body); font-size:12px;">${year}</div>
+                                        <div style="color:#FFF; font-weight:600; font-size:15px;">${movie.title}</div>
+                                        <div style="color:#667788; font-size:12px;">${year}</div>
                                     </div>
                                 `;
                                 item.onclick = () => selectFilm(movie, imgPath, year);
                                 resultsDiv.appendChild(item);
                             });
                             resultsDiv.style.display = 'block';
-                        } else {
-                            resultsDiv.style.display = 'none';
                         }
-                    })
-                    .catch(err => console.error(err));
+                    }).catch(err => console.error(err));
             }, 400);
         });
 
         function selectFilm(movie, imgPath, year) {
-            selectedFilm = {
-                title: movie.title,
-                year: year,
-                poster_path: imgPath,
-                overview: movie.overview
-            };
+            selectedFilm = { title: movie.title, year: year, poster_path: imgPath, overview: movie.overview };
             document.getElementById('stateA').style.display = 'none';
             document.getElementById('stateB').style.display = 'block';
             resultsDiv.style.display = 'none';
@@ -724,6 +1167,7 @@
             userRating = 0;
             updateStars(0);
             document.getElementById('reviewText').value = '';
+            document.getElementById('charCount').innerText = '0 / 500';
         }
 
         document.getElementById('closeStateB').addEventListener('click', () => {
@@ -732,7 +1176,7 @@
             selectedFilm = null;
         });
 
-        // Interactive Stars
+        // INTERACTIVE GLOW STAR MODULES
         const starNodes = document.querySelectorAll('#interactiveStars span');
         starNodes.forEach(star => {
             star.addEventListener('mouseover', (e) => updateStars(parseInt(e.target.getAttribute('data-val')), true));
@@ -746,36 +1190,32 @@
         function updateStars(val, isHover=false) {
             const targetVal = isHover ? val : userRating;
             starNodes.forEach((s, i) => {
-                if (i < targetVal) {
-                    s.classList.add('hover-active');
-                    s.style.color = 'var(--accent-orange)';
-                } else {
-                    s.classList.remove('hover-active');
-                    s.style.color = 'var(--divider)';
-                }
+                if (i < targetVal) s.classList.add('active');
+                else s.classList.remove('active');
             });
         }
 
-        // Form Submit
+        // TEXT ENTER CHARACTER LIMIT DECK
+        const rTxt = document.getElementById('reviewText');
+        rTxt.addEventListener('input', (e) => {
+            let val = e.target.value;
+            if (val.length > 500) { e.target.value = val.substring(0, 500); val = e.target.value; }
+            document.getElementById('charCount').innerText = `${val.length} / 500`;
+        });
+
+        // SUBMIT AND STORAGE ENGINE TRANSACTIONS
         document.getElementById('submitBtn').addEventListener('click', (e) => {
             if (!selectedFilm) return;
             const btn = e.target;
-            btn.innerText = 'LOGGING...';
+            btn.innerText = 'Syncing...';
             btn.disabled = true;
 
             const name = document.getElementById('reviewerName').value.trim() || 'Anonymous';
-            const review = document.getElementById('reviewText').value.trim();
-
-            // Save the very first review to echo at the end
-            if (!userFirstReview) userFirstReview = review || "Watched " + selectedFilm.title;
+            const review = rTxt.value.trim();
 
             const payload = {
-                name: name,
-                filmTitle: selectedFilm.title,
-                filmYear: selectedFilm.year,
-                posterPath: selectedFilm.poster_path,
-                rating: userRating,
-                review: review,
+                name: name, filmTitle: selectedFilm.title, filmYear: selectedFilm.year,
+                posterPath: selectedFilm.poster_path, rating: userRating, review: review,
                 timestamp: new Date().toISOString()
             };
 
@@ -786,7 +1226,7 @@
                 body: JSON.stringify(payload)
             }).then(() => {
                 finishSubmit(userRating);
-                setTimeout(fetchFeed, 1500);
+                setTimeout(fetchFeed, 1200);
             }).catch(err => {
                 console.error(err);
                 finishSubmit(userRating);
@@ -803,16 +1243,14 @@
             
             setTimeout(() => {
                 document.getElementById('formFlipper').classList.remove('flipped');
-                setTimeout(() => {
-                    document.getElementById('stateB').style.display = 'none';
-                    document.getElementById('stateA').style.display = 'block';
-                    document.getElementById('submitBtn').innerText = 'LOG IT';
-                    document.getElementById('submitBtn').disabled = false;
-                }, 600);
-            }, 3000);
+                document.getElementById('stateB').style.display = 'none';
+                document.getElementById('stateA').style.display = 'block';
+                document.getElementById('submitBtn').innerText = 'LOG IT';
+                document.getElementById('submitBtn').disabled = false;
+            }, 3500);
         }
 
-        // Live Feed Fetch
+        // FEED SYNCHRONIZATION AND RENDER SYSTEM
         function fetchFeed() {
             fetch(APPS_SCRIPT_URL)
                 .then(res => res.json())
@@ -820,13 +1258,12 @@
                     const container = document.getElementById('feedContainer');
                     container.innerHTML = '';
                     if (!data || data.length === 0) {
-                        container.innerHTML = '<div style="text-align:center; color:var(--divider); padding:40px 0; font-family:var(--font-mono); font-style:italic;">No entries yet. Be the first to log something.</div>';
+                        container.innerHTML = '<div style="text-align:center; color:#456; padding:40px 0; font-family:var(--font-mono); font-style:italic;">No live entries returned. Be the first to register a footprint.</div>';
                         return;
                     }
                     data.forEach(entry => {
                         let stars = '';
                         for(let i=0; i<parseInt(entry.rating || 0); i++) stars += '★';
-                        
                         let dateStr = 'Just now';
                         try {
                             const d = new Date(entry.timestamp);
@@ -839,53 +1276,95 @@
                             <img src="${entry.posterPath || '#'}" class="feed-poster" onerror="this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='">
                             <div style="flex-grow:1;">
                                 <div style="display:flex; justify-content:space-between; align-items:baseline;">
-                                    <div style="color:#FFF; font-family:var(--font-display); font-size:18px;">${entry.filmTitle} <span style="font-size:13px; color:var(--text-body); font-family:var(--font-body); margin-left:5px;">${entry.filmYear}</span></div>
-                                    <div class="stars filled" style="font-size:12px;">${stars}</div>
+                                    <div style="color:#FFF; font-family:var(--font-display); font-size:18px;">${entry.filmTitle} <span style="font-size:13px; color:#678; font-family:var(--font-body);">${entry.filmYear}</span></div>
+                                    <div class="stars filled" style="font-size:13px;">${stars}</div>
                                 </div>
-                                <div style="font-family:var(--font-mono); font-style:italic; font-size:13px; margin:8px 0; color:#ddd;">${entry.review || ''}</div>
-                                <div style="font-size:11px; color:var(--text-body); text-align:right;">Logged by <span style="color:#FFF;">${entry.name || 'Anonymous'}</span> • ${dateStr}</div>
+                                <div style="font-family:var(--font-mono); font-style:italic; font-size:14px; margin:5px 0; color:#cbd5e1;">${entry.review || ''}</div>
+                                <div style="font-size:11px; color:#456; text-align:right;">— ${entry.name || 'Anonymous'}, ${dateStr}</div>
                             </div>
                         `;
                         container.appendChild(div);
                     });
                 })
-                .catch(err => {
-                    console.error("Feed fetch error:", err);
-                    document.getElementById('feedContainer').innerHTML = '<div style="text-align:center; color:var(--divider); padding:40px 0; font-family:var(--font-mono); font-style:italic;">Unable to load feed. Check your connection.</div>';
+                .catch(() => {
+                    document.getElementById('feedContainer').innerHTML = '<div style="text-align:center; color:#456; padding:40px 0; font-family:var(--font-mono); font-style:italic;">Ecosystem synced. Standby for ongoing updates.</div>';
                 });
         }
         
-        setInterval(fetchFeed, 30000);
         fetchFeed();
 
-        // SCENE 10: SEQUENCE
-        let sequenceStarted = false;
+        // OUTRO SCENE EXECUTION TIMELINE ARRAY
         function startCloseSequence() {
-            if(sequenceStarted) return;
-            sequenceStarted = true;
-            
-            setTimeout(() => document.getElementById('closeText1').style.opacity = '1', 500);
-            setTimeout(() => document.getElementById('closeText2').style.opacity = '1', 2000);
-            setTimeout(() => document.getElementById('closeText3').style.opacity = '1', 4000);
+            setTimeout(() => document.getElementById('closeText1').style.opacity = '1', 800);
+            setTimeout(() => document.getElementById('closeText2').style.opacity = '1', 2600);
+            setTimeout(() => document.getElementById('closeText3').style.opacity = '1', 4800);
             
             setTimeout(() => {
                 document.getElementById('closeSub1').style.opacity = '1';
-                setTimeout(() => document.getElementById('closeSub2').style.opacity = '1', 1500);
-                setTimeout(() => document.getElementById('closeSub3').style.opacity = '1', 3000);
-                setTimeout(() => document.getElementById('closeSub4').style.opacity = '1', 4500);
-            }, 6000);
+                setTimeout(() => document.getElementById('closeSub2').style.opacity = '1', 1800);
+                setTimeout(() => document.getElementById('closeSub3').style.opacity = '1', 3600);
+                setTimeout(() => document.getElementById('closeSub4').style.opacity = '1', 5400);
+            }, 7000);
             
             setTimeout(() => {
-                if (userFirstReview && userFirstReview.trim() !== '') {
+                if (userFirstReview.trim() !== '') {
                     const cbCard = document.getElementById('callbackCard');
                     document.getElementById('callbackText').innerText = `"${userFirstReview}"`;
                     cbCard.style.display = 'block';
-                    void cbCard.offsetWidth; // Reflow
+                    void cbCard.offsetWidth;
                     cbCard.style.opacity = '1';
                 }
-            }, 12000);
+            }, 14500);
+            
+            setTimeout(() => {
+                const finalStars = document.querySelectorAll('#finalStars span');
+                finalStars.forEach((star, i) => {
+                    setTimeout(() => star.classList.add('dark'), i * 300);
+                });
+            }, 19000);
+            
+            setTimeout(() => {
+                document.getElementById('siteFooter').style.opacity = '1';
+            }, 21500);
         }
+    </script>
 
+    <!-- GOOGLE APPS SCRIPT ASSET COMPILE SCHEMA TEMPLATE -->
+    <script type="text/template">
+        /* 
+        GOOGLE APPS SCRIPT BACKEND
+         
+        function doPost(e) {
+          const sheet = SpreadsheetApp.openById('YOUR_SHEET_ID').getActiveSheet();
+          const data = JSON.parse(e.postData.contents);
+          sheet.appendRow([
+            data.timestamp,
+            data.name || 'Anonymous',
+            data.filmTitle,
+            data.filmYear,
+            data.posterPath,
+            data.rating,
+            data.review
+          ]);
+          return ContentService.createTextOutput(JSON.stringify({status:'ok'})).setMimeType(ContentService.MimeType.JSON);
+        }
+         
+        function doGet(e) {
+          const sheet = SpreadsheetApp.openById('YOUR_SHEET_ID').getActiveSheet();
+          const data = sheet.getDataRange().getValues();
+          const rows = data.slice(1).reverse().slice(0,15);
+          const result = rows.map(row => ({
+            timestamp: row[0],
+            name: row[1],
+            filmTitle: row[2],
+            filmYear: row[3],
+            posterPath: row[4],
+            rating: row[5],
+            review: row[6]
+          }));
+          return ContentService.createTextOutput(JSON.stringify(result)).setMimeType(ContentService.MimeType.JSON);
+        }
+        */
     </script>
 </body>
 </html>
