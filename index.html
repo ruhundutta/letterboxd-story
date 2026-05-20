@@ -1,6 +1,3 @@
-Here is the fully optimized interactive digital story. I have significantly condensed the heavy essay text into punchy, infographic-style visual arguments, restored and enhanced the Origin, Timeline, and Stats sections, separated the TMDB input (beginning) from the live feed (end), enlarged the footer, and perfected the faded background images using CSS masks.
-
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -107,18 +104,18 @@ Here is the fully optimized interactive digital story. I have significantly cond
         }
         .intro-text p {
             font-family: var(--font-display); font-size: clamp(24px, 5vw, 38px);
-            color: var(--text-heading); opacity: 0; margin-bottom: 8px; animation: fadeInLine 1.5s forwards; line-height: 1.2;
+            color: var(--text-heading); opacity: 0; margin-bottom: 8px; animation: fadeInLine 0.7s forwards; line-height: 1.2;
         }
-        .intro-text p:nth-child(1) { animation-delay: 0.5s; }
-        .intro-text p:nth-child(2) { animation-delay: 2.2s; }
-        .intro-text p:nth-child(3) { animation-delay: 3.9s; }
-        .intro-text p:nth-child(4) { animation-delay: 5.6s; font-weight: 700; color: var(--accent-orange); }
+        .intro-text p:nth-child(1) { animation-delay: 0.05s; }
+        .intro-text p:nth-child(2) { animation-delay: 0.8s; }
+        .intro-text p:nth-child(3) { animation-delay: 1.5s; }
+        .intro-text p:nth-child(4) { animation-delay: 2.2s; font-weight: 700; color: var(--accent-orange); }
         @keyframes fadeInLine { to { opacity: 1; transform: translateY(0); } }
 
         .phone-mockup {
             width: 290px; height: 490px; border: 3px solid #222; border-radius: 36px; margin: 30px 0;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            opacity: 0; animation: phoneDiscover 1.8s forwards 6.8s; background: #111;
+            opacity: 0; animation: phoneDiscover 1.8s forwards 3.2s; background: #111;
             box-shadow: 0 25px 50px -12px rgba(0,0,0,0.7), 0 0 30px rgba(255, 128, 0, 0.05);
         }
         @keyframes phoneDiscover { to { opacity: 1; } }
@@ -132,7 +129,7 @@ Here is the fully optimized interactive digital story. I have significantly cond
         .scene-09-container {
             background: rgba(31, 37, 53, 0.8); backdrop-filter: blur(15px); padding: 35px; border-radius: 8px;
             max-width: 650px; margin: 40px auto 80px; border: 1px solid rgba(255,255,255,0.04);
-            box-shadow: 0 20px 45px rgba(0,0,0,0.4); opacity: 0; animation: phoneDiscover 1.5s forwards 9.5s; perspective: 1000px;
+            box-shadow: 0 20px 45px rgba(0,0,0,0.4); opacity: 0; animation: phoneDiscover 1.5s forwards 4s; perspective: 1000px;
         }
         .section-heading-custom { font-family: var(--font-display); font-size: 36px; color: var(--text-heading); text-align: center; margin-bottom: 30px; letter-spacing: 1px; }
         .input-dark {
@@ -144,8 +141,9 @@ Here is the fully optimized interactive digital story. I have significantly cond
         .tmdb-results {
             position: absolute; width: calc(100% - 70px); background: #14181c; border: 1px solid #345;
             border-top: none; max-height: 260px; overflow-y: auto; z-index: 120; border-radius: 0 0 6px 6px; display: none;
+            top: 100%; left: 30px;
         }
-        .tmdb-result-item { display: flex; gap: 12px; padding: 12px; cursor: pointer; border-bottom: 1px solid rgba(69,102,119,0.2); }
+        .tmdb-result-item { display: flex; gap: 12px; padding: 12px; cursor: pointer; border-bottom: 1px solid rgba(69,102,119,0.2); transition: background 0.2s; }
         .tmdb-result-item:hover { background: #242f47; }
         .tmdb-thumb { width: 42px; height: 62px; background: #345; object-fit: cover; border-radius: 3px; }
         
@@ -163,6 +161,7 @@ Here is the fully optimized interactive digital story. I have significantly cond
             font-size: 20px; border: none; border-radius: 4px; cursor: pointer; letter-spacing: 1px; font-weight: 600; transition: background 0.2s, transform 0.2s;
         }
         .submit-btn:hover { background: #ff9422; transform: translateY(-2px); }
+        .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
         
         .flipper { transition: transform 0.6s; transform-style: preserve-3d; }
         .flipped { transform: rotateY(180deg); }
@@ -301,8 +300,8 @@ Here is the fully optimized interactive digital story. I have significantly cond
 
         /* Scene 10: The Close */
         .scene-10 { min-height: 100vh; background: #0a0a0a; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 60px 20px; }
-        .fade-text { font-size: clamp(26px, 5vw, 42px); font-family: var(--font-display); color: var(--text-heading); opacity: 0; transition: opacity 2s cubic-bezier(0.16, 1, 0.3, 1); margin-bottom: 12px; }
-        .fade-subtext { font-family: var(--font-mono); font-size: 15px; color: var(--text-body); opacity: 0; transition: opacity 2s cubic-bezier(0.16, 1, 0.3, 1); margin-bottom: 8px; }
+        .fade-text { font-size: clamp(26px, 5vw, 42px); font-family: var(--font-display); color: var(--text-heading); opacity: 0; transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1); margin-bottom: 12px; }
+        .fade-subtext { font-family: var(--font-mono); font-size: 15px; color: var(--text-body); opacity: 0; transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1); margin-bottom: 8px; }
         
         .callback-card {
             background: var(--bg-card-solid); padding: 30px; border-radius: 8px; margin: 40px 0; max-width: 460px; width: 100%;
@@ -313,11 +312,11 @@ Here is the fully optimized interactive digital story. I have significantly cond
         .final-stars span.dark { color: #14181c; }
 
         /* Footer */
-        .site-footer { margin-top: 80px; padding: 40px; text-align: center; opacity: 0; transition: opacity 2s; border-top: 1px solid rgba(255,255,255,0.05); width: 100%; }
-        .footer-primary { font-size: 22px; font-family: var(--font-display); letter-spacing: 1px; color: #FFF; margin-bottom: 8px; }
-        .footer-secondary { font-size: 14px; letter-spacing: 0.5px; color: #667788; }
-        .site-footer a { color: var(--accent-orange); text-decoration: none; margin: 0 10px; font-size: 15px; font-weight: 600; }
-        .site-footer a:hover { text-decoration: underline; }
+        .site-footer { margin-top: 80px; padding: 60px 40px; text-align: center; opacity: 0; transition: opacity 2s; border-top: 1px solid rgba(255,255,255,0.05); width: 100%; background: rgba(31,37,53,0.4); }
+        .footer-primary { font-size: 36px; font-family: var(--font-display); letter-spacing: 2px; color: #FFF; margin-bottom: 12px; font-weight: 700; }
+        .footer-secondary { font-size: 16px; letter-spacing: 0.5px; color: #99aabb; margin-bottom: 20px; }
+        .site-footer a { color: var(--accent-orange); text-decoration: none; margin: 0 12px; font-size: 17px; font-weight: 600; transition: color 0.2s; }
+        .site-footer a:hover { color: #ffad5c; text-decoration: underline; }
     </style>
 </head>
 <body>
@@ -330,10 +329,7 @@ Here is the fully optimized interactive digital story. I have significantly cond
     </div>
 
     <nav class="nav-bar">
-        <a href="#" class="nav-logo">
-            <img src="https://raw.githubusercontent.com/ruhundutta/letterboxd-story/e7bb126721f4e27078aca825db24a04a58e99180/letterboxd-icon.png" alt="Logo">
-            <span>Letterboxd</span>
-        </a>
+        <a href="#" class="nav-logo">Letterboxd</a>
         <div class="nav-links">
             <a href="#essay-start">ESSAY</a>
             <a href="#archives">ARCHIVES</a>
@@ -353,7 +349,7 @@ Here is the fully optimized interactive digital story. I have significantly cond
             <h2 class="section-heading-custom">LOG IT OR LOSE IT</h2>
             <div class="flipper" id="formFlipper">
                 <div class="front">
-                    <div id="stateA">
+                    <div id="stateA" style="position: relative;">
                         <div style="font-family:var(--font-display); font-size:13px; color:#667788; margin-bottom:8px; letter-spacing:1px; text-transform:uppercase;">What did you just watch?</div>
                         <input type="text" id="tmdbSearch" class="input-dark" placeholder="Search the global registry...">
                         <div class="tmdb-results" id="tmdbResults"></div>
@@ -496,21 +492,11 @@ Here is the fully optimized interactive digital story. I have significantly cond
         </div>
     </section>
 
-    <div class="backdrop-strip reveal"><img src="https://raw.githubusercontent.com/ruhundutta/letterboxd-story/e7bb126721f4e27078aca825db24a04a58e99180/image_1750346724128.jpg" alt="Atmospheric Strip"></div>
-
     <section class="container reveal reveal-up">
         <h2 style="font-size: 38px; text-align:center; margin-bottom: 40px;">THE QUANTIFICATION OF LOVE</h2>
         
         <div class="grid-header">01. THE PROMISE</div>
         <p>Letterboxd promises the radical democratisation of taste. A review reading <em>"all i want for christmas is a milf"</em> has the same algorithmic chance of visibility as a 2,000-word essay on Freudian death drives.</p>
-        
-        <div class="poster-grid grid-5-col">
-            <div><div class="poster-card"><img src="https://raw.githubusercontent.com/ruhundutta/letterboxd-story/e7bb126721f4e27078aca825db24a04a58e99180/1197499-marty-supreme-0-2000-0-3000-crop.jpg" alt="Poster"></div><div class="card-metadata"><span class="stars filled">★★★★★</span><span class="heart-icon">♥</span></div></div>
-            <div><div class="poster-card"><img src="https://raw.githubusercontent.com/ruhundutta/letterboxd-story/e7bb126721f4e27078aca825db24a04a58e99180/1196911-wuthering-heights-2026-0-2000-0-3000-crop.jpg" alt="Poster"></div><div class="card-metadata"><span class="stars filled">★★★★</span><span class="heart-icon">♥</span></div></div>
-            <div><div class="poster-card"><img src="https://raw.githubusercontent.com/ruhundutta/letterboxd-story/e7bb126721f4e27078aca825db24a04a58e99180/Kuch%20Kuch%20Hota%20Hai%20(1998).png" alt="Poster"></div><div class="card-metadata"><span class="stars filled">★★★★½</span><span class="heart-icon">♥</span></div></div>
-            <div><div class="poster-card"><img src="https://raw.githubusercontent.com/ruhundutta/letterboxd-story/e7bb126721f4e27078aca825db24a04a58e99180/Kabhi%20Khushi%20Kabhie%20Gham%20(2001).png" alt="Poster"></div><div class="card-metadata"><span class="stars filled">★★★</span><span class="heart-icon">♥</span></div></div>
-            <div><div class="poster-card"><img src="https://raw.githubusercontent.com/ruhundutta/letterboxd-story/e7bb126721f4e27078aca825db24a04a58e99180/1311251-my-fathers-shadow-2025-0-2000-0-3000-crop.jpg" alt="Poster"></div><div class="card-metadata"><span class="stars filled">★★★★</span><span class="heart-icon">♥</span></div></div>
-        </div>
 
         <div class="info-block reveal reveal-up">
             <h3>VALUE CAPTURE</h3>
@@ -525,36 +511,10 @@ Here is the fully optimized interactive digital story. I have significantly cond
         </div>
     </section>
 
-    <div class="backdrop-strip reveal"><img src="https://raw.githubusercontent.com/ruhundutta/letterboxd-story/e7bb126721f4e27078aca825db24a04a58e99180/cccXiN28CPjcMVhji5LnogF4Njp.webp" alt="Visual Fade"></div>
-
     <section class="container reveal reveal-up" id="community">
         <div class="grid-header">02. THE PERFORMANCE OF TASTE</div>
         <p>Taste is never just private. As Pierre Bourdieu argued, it is a weapon used to classify ourselves. On Letterboxd, this is highly visible. The "Top Four" isn't a list of what you love; it's a carefully curated billboard of who you want people to think you are.</p>
         
-        <div class="raya-profile-section reveal reveal-up">
-            <div style="display:flex; align-items:center; gap:20px;">
-                <img src="https://raw.githubusercontent.com/ruhundutta/letterboxd-story/e7bb126721f4e27078aca825db24a04a58e99180/avtr-0-1000-0-1000-crop.jpg" alt="Raya" style="width:76px; height:76px; border-radius:50%; object-fit:cover; border:2px solid var(--accent-orange);">
-                <div>
-                    <h3 style="color:#FFF; font-size:26px; text-transform:none; margin:0;">Raya</h3>
-                    <div style="color:#678; font-size:14px; margin-top:2px;">@raya_cinema</div>
-                </div>
-            </div>
-            <div class="raya-meta-grid">
-                <div class="raya-meta-item"><div class="num">240</div><div class="lbl">FILMS</div></div>
-                <div class="raya-meta-item"><div class="num">25</div><div class="lbl">THIS YEAR</div></div>
-                <div class="raya-meta-item"><div class="num">8</div><div class="lbl">LISTS</div></div>
-                <div class="raya-meta-item"><div class="num">205</div><div class="lbl">FOLLOWING</div></div>
-                <div class="raya-meta-item"><div class="num">126</div><div class="lbl">FOLLOWERS</div></div>
-            </div>
-            <div style="font-family:var(--font-display); font-size:12px; color:#567; letter-spacing:1.5px; margin-top:25px; margin-bottom:12px; text-transform:uppercase;">RAYA'S TOP FOUR</div>
-            <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:12px;">
-                <div class="poster-card" style="box-shadow:none;"><img src="https://raw.githubusercontent.com/ruhundutta/letterboxd-story/e7bb126721f4e27078aca825db24a04a58e99180/51634-my-own-private-idaho-0-2000-0-3000-crop.jpg" alt="Idaho"></div>
-                <div class="poster-card" style="box-shadow:none;"><img src="https://raw.githubusercontent.com/ruhundutta/letterboxd-story/e7bb126721f4e27078aca825db24a04a58e99180/361719-god-s-own-country-0-2000-0-3000-crop.jpg" alt="Country"></div>
-                <div class="poster-card" style="box-shadow:none;"><img src="https://raw.githubusercontent.com/ruhundutta/letterboxd-story/e7bb126721f4e27078aca825db24a04a58e99180/328538-the-florida-project-0-2000-0-3000-crop.jpg" alt="Florida"></div>
-                <div class="poster-card" style="box-shadow:none;"><img src="https://raw.githubusercontent.com/ruhundutta/letterboxd-story/e7bb126721f4e27078aca825db24a04a58e99180/18951-hum-aapke-hain-koun-0-2000-0-3000-crop.jpg" alt="Hum Aapke"></div>
-            </div>
-        </div>
-
         <div class="info-block reveal reveal-up" style="border-left-color: var(--brand-red);">
             <h3 style="font-size: 20px;">THE TI WEST INCIDENT</h3>
             <p>When director Ti West submitted his 2022 <em>Sight & Sound</em> ballot, he included <em>Jaws</em> and <em>Citizen Kane</em>. The internet tore him apart. Why? They were deemed "too basic". He wasn't performing enough cinephilic obscurity. The signal mattered more than the films themselves.</p>
@@ -580,8 +540,6 @@ Here is the fully optimized interactive digital story. I have significantly cond
             </div>
         </div>
     </section>
-
-    <div class="backdrop-strip reveal"><img src="https://raw.githubusercontent.com/ruhundutta/letterboxd-story/e7bb126721f4e27078aca825db24a04a58e99180/anora%201.jpg" alt="Atmospheric Fade"></div>
 
     <section class="container reveal">
         <div class="live-feed">
@@ -623,9 +581,10 @@ Here is the fully optimized interactive digital story. I have significantly cond
         <div class="final-stars" id="finalStars"><span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span></div>
         
         <footer class="site-footer" id="siteFooter">
-            <div class="footer-primary">ROHAN DUTTA &nbsp;·&nbsp; RAJKUMAR &nbsp;·&nbsp; ARPIT YADAV</div>
+            <div class="footer-primary">ROHAN DUTTA</div>
+            <div class="footer-primary" style="font-size: 32px; margin-top: 8px; margin-bottom: 20px;">RAJKUMAR · ARPIT YADAV</div>
             <div class="footer-secondary">MA Communication &nbsp;|&nbsp; Media Portfolio Project &nbsp;|&nbsp; University of Hyderabad &nbsp;|&nbsp; 2026</div>
-            <div style="margin-top:20px; display:flex; gap:20px; justify-content:center; flex-wrap:wrap;">
+            <div style="margin-top:30px; display:flex; gap:30px; justify-content:center; flex-wrap:wrap;">
                 <a href="#" class="placeholder-link">Voxpop Component</a>
                 <a href="#" class="placeholder-link">Podcast Deck</a>
                 <a href="#" class="placeholder-link">Video Essay Edit</a>
@@ -638,8 +597,10 @@ Here is the fully optimized interactive digital story. I have significantly cond
         let selectedFilm = null;
         let userRating = 0;
         
-        const TMDB_API_KEY = 'e7436aeaa869794362bd07b30969c95d'; 
+        const TMDB_API_KEY = 'e7436aeaa869794362bd07b30969c95d';
         const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby5lChsDiANYCcIkm46u60OHAiAR7_fGFDVmMMMiSKAYBT2GaseU9dzUAegaqF0NYKJIw/exec';
+
+        console.log("Script loaded. TMDB Key:", TMDB_API_KEY.substring(0, 10) + "...");
 
         // Reveal Observer
         const revealObserver = new IntersectionObserver((entries) => {
@@ -657,17 +618,22 @@ Here is the fully optimized interactive digital story. I have significantly cond
         // Startup Phone Animation
         setTimeout(() => {
             const stars = document.querySelectorAll('#phoneStars span');
-            stars.forEach((star, i) => {
-                setTimeout(() => { 
-                    star.style.color = '#FF8000'; 
-                    star.style.textShadow = '0 0 12px rgba(255,128,0,0.8)';
-                }, i * 400);
-            });
+            if (stars.length > 0) {
+                stars.forEach((star, i) => {
+                    setTimeout(() => { 
+                        star.style.color = '#FF8000'; 
+                        star.style.textShadow = '0 0 12px rgba(255,128,0,0.8)';
+                    }, i * 400);
+                });
+            }
             setTimeout(() => {
-                document.getElementById('fakeReview').style.opacity = '1';
-                document.getElementById('fakeReview').innerText = "Analyzing processing traces...";
-            }, 2400);
-        }, 6000);
+                const fakeReview = document.getElementById('fakeReview');
+                if (fakeReview) {
+                    fakeReview.style.opacity = '1';
+                    fakeReview.innerText = "Ready to log...";
+                }
+            }, 2000);
+        }, 3000);
 
         document.getElementById('firstReviewInput').addEventListener('input', (e) => {
             userFirstReview = e.target.value;
@@ -687,7 +653,7 @@ Here is the fully optimized interactive digital story. I have significantly cond
             }, 120);
         });
 
-        // TMDB Search
+        // TMDB Search - FIXED
         const searchInput = document.getElementById('tmdbSearch');
         const resultsDiv = document.getElementById('tmdbResults');
         let searchTimeout;
@@ -695,85 +661,147 @@ Here is the fully optimized interactive digital story. I have significantly cond
         searchInput.addEventListener('input', (e) => {
             clearTimeout(searchTimeout);
             const query = e.target.value.trim();
-            if (query.length < 2) { resultsDiv.style.display = 'none'; return; }
+            if (query.length < 2) { 
+                resultsDiv.style.display = 'none'; 
+                return; 
+            }
+            
             searchTimeout = setTimeout(() => {
-                fetch(`https://api.themoviedb.org/3/search/movie?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(query)}&include_adult=false`)
-                    .then(res => res.json())
+                console.log("Searching for:", query);
+                
+                // Using the TMDB API key in URL
+                const searchUrl = `https://api.themoviedb.org/3/search/movie?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(query)}&include_adult=false`;
+                
+                fetch(searchUrl)
+                    .then(res => {
+                        console.log("Response status:", res.status);
+                        return res.json();
+                    })
                     .then(data => {
+                        console.log("Search results:", data);
                         resultsDiv.innerHTML = '';
+                        
                         if (data.results && data.results.length > 0) {
-                            data.results.slice(0, 5).forEach(movie => {
+                            data.results.slice(0, 6).forEach(movie => {
                                 const year = movie.release_date ? movie.release_date.substring(0,4) : 'Unknown';
                                 const item = document.createElement('div');
                                 item.className = 'tmdb-result-item';
-                                const imgPath = movie.poster_path ? `https://image.tmdb.org/t/p/w92${movie.poster_path}` : 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=';
-                                item.innerHTML = `<img src="${imgPath}" class="tmdb-thumb"><div><div style="color:#FFF; font-weight:600; font-size:15px;">${movie.title}</div><div style="color:#667788; font-size:12px;">${year}</div></div>`;
+                                const imgPath = movie.poster_path ? `https://image.tmdb.org/t/p/w92${movie.poster_path}` : '';
+                                
+                                item.innerHTML = `
+                                    ${imgPath ? `<img src="${imgPath}" class="tmdb-thumb">` : '<div class="tmdb-thumb" style="background:#345;"></div>'}
+                                    <div style="flex:1;">
+                                        <div style="color:#FFF; font-weight:600; font-size:15px;">${movie.title}</div>
+                                        <div style="color:#667788; font-size:12px;">${year}</div>
+                                    </div>
+                                `;
+                                
                                 item.onclick = () => selectFilm(movie, imgPath, year);
                                 resultsDiv.appendChild(item);
                             });
                             resultsDiv.style.display = 'block';
+                        } else {
+                            resultsDiv.innerHTML = '<div style="padding:15px; color:#456;">No films found. Try another search.</div>';
+                            resultsDiv.style.display = 'block';
                         }
-                    }).catch(err => console.error(err));
+                    })
+                    .catch(err => {
+                        console.error("TMDB Error:", err);
+                        resultsDiv.innerHTML = '<div style="padding:15px; color:#f00;">Search error. Check your connection.</div>';
+                        resultsDiv.style.display = 'block';
+                    });
             }, 400);
         });
 
         function selectFilm(movie, imgPath, year) {
+            console.log("Film selected:", movie.title);
             selectedFilm = { title: movie.title, year: year, poster_path: imgPath };
             document.getElementById('stateA').style.display = 'none';
             document.getElementById('stateB').style.display = 'block';
-            resultsDiv.style.display = 'none'; searchInput.value = '';
+            resultsDiv.style.display = 'none'; 
+            searchInput.value = '';
             document.getElementById('selectedTitle').innerText = selectedFilm.title;
             document.getElementById('selectedYear').innerText = selectedFilm.year;
-            document.getElementById('selectedPoster').src = selectedFilm.poster_path;
-            userRating = 0; updateStars(0);
+            if (imgPath) document.getElementById('selectedPoster').src = selectedFilm.poster_path;
+            userRating = 0; 
+            updateStars(0);
             document.getElementById('reviewText').value = '';
             document.getElementById('charCount').innerText = '0 / 500';
         }
 
         document.getElementById('closeStateB').addEventListener('click', () => {
-            document.getElementById('stateB').style.display = 'none'; document.getElementById('stateA').style.display = 'block'; selectedFilm = null;
+            document.getElementById('stateB').style.display = 'none'; 
+            document.getElementById('stateA').style.display = 'block'; 
+            selectedFilm = null;
         });
 
         // Interactive Stars
         const starNodes = document.querySelectorAll('#interactiveStars span');
         starNodes.forEach(star => {
             star.addEventListener('mouseover', (e) => updateStars(parseInt(e.target.getAttribute('data-val')), true));
-            star.addEventListener('click', (e) => { userRating = parseInt(e.target.getAttribute('data-val')); updateStars(userRating); });
+            star.addEventListener('click', (e) => { 
+                userRating = parseInt(e.target.getAttribute('data-val')); 
+                updateStars(userRating); 
+            });
         });
         document.getElementById('interactiveStars').addEventListener('mouseleave', () => updateStars(userRating));
 
         function updateStars(val, isHover=false) {
             const targetVal = isHover ? val : userRating;
-            starNodes.forEach((s, i) => { if (i < targetVal) s.classList.add('active'); else s.classList.remove('active'); });
+            starNodes.forEach((s, i) => { 
+                if (i < targetVal) s.classList.add('active'); 
+                else s.classList.remove('active'); 
+            });
         }
 
         const rTxt = document.getElementById('reviewText');
         rTxt.addEventListener('input', (e) => {
             let val = e.target.value;
-            if (val.length > 500) { e.target.value = val.substring(0, 500); val = e.target.value; }
+            if (val.length > 500) { 
+                e.target.value = val.substring(0, 500); 
+                val = e.target.value; 
+            }
             document.getElementById('charCount').innerText = `${val.length} / 500`;
         });
 
         // Form Submit
         document.getElementById('submitBtn').addEventListener('click', (e) => {
-            if (!selectedFilm) return;
-            const btn = e.target; btn.innerText = 'Syncing...'; btn.disabled = true;
+            if (!selectedFilm) {
+                alert('Please select a film first');
+                return;
+            }
+            const btn = e.target; 
+            btn.innerText = 'Syncing...'; 
+            btn.disabled = true;
 
             const name = document.getElementById('reviewerName').value.trim() || 'Anonymous';
             const review = rTxt.value.trim();
 
             const payload = {
-                name: name, filmTitle: selectedFilm.title, filmYear: selectedFilm.year,
-                posterPath: selectedFilm.poster_path, rating: userRating, review: review,
+                name: name, 
+                filmTitle: selectedFilm.title, 
+                filmYear: selectedFilm.year,
+                posterPath: selectedFilm.poster_path, 
+                rating: userRating, 
+                review: review,
                 timestamp: new Date().toISOString()
             };
 
+            console.log("Submitting:", payload);
+
             fetch(APPS_SCRIPT_URL, {
-                method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(payload)
+                method: 'POST', 
+                mode: 'no-cors', 
+                headers: { 'Content-Type': 'application/json' }, 
+                body: JSON.stringify(payload)
             }).then(() => {
+                console.log("Submit successful");
                 finishSubmit(userRating);
                 setTimeout(fetchFeed, 2000); 
-            }).catch(err => { console.error(err); finishSubmit(userRating); });
+            }).catch(err => { 
+                console.error("Submit error:", err); 
+                finishSubmit(userRating);
+            });
         });
 
         function finishSubmit(rating) {
@@ -790,6 +818,9 @@ Here is the fully optimized interactive digital story. I have significantly cond
                 document.getElementById('stateA').style.display = 'block';
                 document.getElementById('submitBtn').innerText = 'LOG IT';
                 document.getElementById('submitBtn').disabled = false;
+                rTxt.value = '';
+                document.getElementById('reviewerName').value = '';
+                selectedFilm = null;
             }, 3500);
         }
 
@@ -798,17 +829,23 @@ Here is the fully optimized interactive digital story. I have significantly cond
             fetch(APPS_SCRIPT_URL)
                 .then(res => res.json())
                 .then(data => {
-                    const container = document.getElementById('feedContainer'); container.innerHTML = '';
+                    const container = document.getElementById('feedContainer'); 
+                    container.innerHTML = '';
                     if (!data || data.length === 0) {
                         container.innerHTML = '<div style="text-align:center; color:#456; padding:40px 0; font-family:var(--font-mono); font-style:italic;">No live entries returned. Be the first to register a footprint.</div>';
                         return;
                     }
                     data.forEach(entry => {
-                        let stars = ''; for(let i=0; i<parseInt(entry.rating || 0); i++) stars += '★';
+                        let stars = ''; 
+                        for(let i=0; i<parseInt(entry.rating || 0); i++) stars += '★';
                         let dateStr = 'Just now';
-                        try { const d = new Date(entry.timestamp); if (!isNaN(d)) dateStr = d.toLocaleDateString(); } catch(e) {}
+                        try { 
+                            const d = new Date(entry.timestamp); 
+                            if (!isNaN(d)) dateStr = d.toLocaleDateString(); 
+                        } catch(e) {}
                         
-                        const div = document.createElement('div'); div.className = 'feed-entry';
+                        const div = document.createElement('div'); 
+                        div.className = 'feed-entry';
                         div.innerHTML = `
                             <img src="${entry.posterPath || '#'}" class="feed-poster" onerror="this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='">
                             <div style="flex-grow:1;">
@@ -824,11 +861,13 @@ Here is the fully optimized interactive digital story. I have significantly cond
                     });
                 })
                 .catch(err => {
+                    console.error("Feed fetch error:", err);
                     document.getElementById('feedContainer').innerHTML = '<div style="text-align:center; color:#456; padding:40px 0; font-family:var(--font-mono); font-style:italic;">Ecosystem synced. Waiting for logs to append.</div>';
                 });
         }
         
-        fetchFeed(); setInterval(fetchFeed, 30000);
+        fetchFeed(); 
+        setInterval(fetchFeed, 30000);
 
         // Vector Interaction
         document.querySelectorAll('.vector-hotspot').forEach(hotspot => {
@@ -842,56 +881,39 @@ Here is the fully optimized interactive digital story. I have significantly cond
             });
         });
 
-        // Outro Sequence
+        // Outro Sequence - FASTER
         function startCloseSequence() {
-            setTimeout(() => document.getElementById('closeText1').style.opacity = '1', 800);
-            setTimeout(() => document.getElementById('closeText2').style.opacity = '1', 2600);
+            setTimeout(() => document.getElementById('closeText1').style.opacity = '1', 400);
+            setTimeout(() => document.getElementById('closeText2').style.opacity = '1', 1600);
             
             setTimeout(() => {
                 document.getElementById('closeSub1').style.opacity = '1';
-                setTimeout(() => document.getElementById('closeSub2').style.opacity = '1', 1800);
-                setTimeout(() => document.getElementById('closeSub3').style.opacity = '1', 3600);
-                setTimeout(() => document.getElementById('closeSub4').style.opacity = '1', 5400);
-            }, 5000);
+                setTimeout(() => document.getElementById('closeSub2').style.opacity = '1', 900);
+                setTimeout(() => document.getElementById('closeSub3').style.opacity = '1', 1800);
+                setTimeout(() => document.getElementById('closeSub4').style.opacity = '1', 2700);
+            }, 2800);
             
             setTimeout(() => {
                 if (userFirstReview.trim() !== '') {
                     const cbCard = document.getElementById('callbackCard');
                     document.getElementById('callbackText').innerText = `"${userFirstReview}"`;
-                    cbCard.style.display = 'block'; void cbCard.offsetWidth; cbCard.style.opacity = '1';
+                    cbCard.style.display = 'block'; 
+                    void cbCard.offsetWidth; 
+                    cbCard.style.opacity = '1';
                 }
-            }, 12000);
+            }, 6500);
             
             setTimeout(() => {
                 const finalStars = document.querySelectorAll('#finalStars span');
-                finalStars.forEach((star, i) => { setTimeout(() => star.classList.add('dark'), i * 300); });
-            }, 16000);
+                finalStars.forEach((star, i) => { 
+                    setTimeout(() => star.classList.add('dark'), i * 250); 
+                });
+            }, 8500);
             
-            setTimeout(() => { document.getElementById('siteFooter').style.opacity = '1'; }, 18500);
+            setTimeout(() => { 
+                document.getElementById('siteFooter').style.opacity = '1'; 
+            }, 10000);
         }
-    </script>
-
-    <script type="text/template">
-        /* GOOGLE APPS SCRIPT BACKEND
-        function doPost(e) {
-          const sheet = SpreadsheetApp.openById('1L65DkFrVd3CbOVjByDj5ExtSzfaYZwQxsp1JuqTLrlCe3sCtt1g17IFr').getActiveSheet();
-          let data;
-          try { data = JSON.parse(e.postData.contents); } catch(err) { return ContentService.createTextOutput("Error").setMimeType(ContentService.MimeType.TEXT); }
-          sheet.appendRow([data.timestamp, data.name || 'Anonymous', data.filmTitle, data.filmYear, data.posterPath, data.rating, data.review]);
-          return ContentService.createTextOutput(JSON.stringify({status:'ok'})).setMimeType(ContentService.MimeType.JSON);
-        }
-         
-        function doGet(e) {
-          const sheet = SpreadsheetApp.openById('1L65DkFrVd3CbOVjByDj5ExtSzfaYZwQxsp1JuqTLrlCe3sCtt1g17IFr').getActiveSheet();
-          const data = sheet.getDataRange().getValues();
-          if (data.length <= 1) return ContentService.createTextOutput(JSON.stringify([])).setMimeType(ContentService.MimeType.JSON);
-          const rows = data.slice(1).reverse().slice(0,15);
-          const result = rows.map(row => ({ timestamp: row[0], name: row[1], filmTitle: row[2], filmYear: row[3], posterPath: row[4], rating: row[5], review: row[6] }));
-          return ContentService.createTextOutput(JSON.stringify(result)).setMimeType(ContentService.MimeType.JSON);
-        }
-        */
     </script>
 </body>
 </html>
-
-```
