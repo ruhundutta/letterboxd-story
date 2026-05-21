@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,13 +36,13 @@
             position: relative;
         }
 
-        /* Ambient Blur Bokeh Background */
+        /* Ambient Blur Bokeh Background - Kept for sleek lighting */
         .ambient-background {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
             z-index: -2;
             overflow: hidden;
-            background: #0d1013;
+            background: #0d1013; /* Deep sleek dark */
             pointer-events: none;
         }
         .bokeh-sphere {
@@ -70,21 +69,11 @@
             text-transform: uppercase;
         }
 
-        /* Noise Overlay */
-        .noise-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none;
-            z-index: 9999;
-            opacity: 0.03;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-        }
-
         /* Letterboxd Nav Bar */
         .nav-bar {
             position: fixed;
             top: 0; left: 0; width: 100%;
-            height: 60px;
+            height: 70px; /* Slightly taller to accommodate larger logo */
             background-color: rgba(17, 17, 17, 0.85);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
@@ -98,16 +87,16 @@
         .nav-logo {
             color: var(--text-heading);
             font-family: var(--font-display);
-            font-size: 24px;
+            font-size: 26px; /* Increased font size */
             letter-spacing: 2px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             text-decoration: none;
         }
         .nav-logo img {
-            width: 26px;
-            height: 26px;
+            width: 42px; /* Increased size */
+            height: 42px; /* Increased size */
             object-fit: contain;
         }
         .nav-links {
@@ -416,12 +405,23 @@
             aspect-ratio: 2/3;
             border-radius: 6px;
             overflow: hidden;
-            background-color: #1a1f2c;
+            background-color: #0d1013;
             box-shadow: 0 8px 16px rgba(0,0,0,0.4);
             transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s;
             border: 1px solid transparent;
             cursor: pointer;
         }
+        
+        /* Inner Vignette Fade for Images */
+        .poster-card::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            box-shadow: inset 0 0 25px 5px rgba(20, 24, 28, 0.95);
+            pointer-events: none;
+            transition: box-shadow 0.3s ease;
+        }
+
         .poster-card img {
             width: 100%; height: 100%; object-fit: cover;
             transition: filter 0.3s;
@@ -430,6 +430,9 @@
             transform: scale(1.04) translateY(-4px);
             box-shadow: 0 12px 24px rgba(0,0,0,0.6);
             border-color: var(--badge-green);
+        }
+        .poster-card:hover::after {
+            box-shadow: inset 0 0 12px 2px rgba(20, 24, 28, 0.6);
         }
         
         .card-metadata {
@@ -460,8 +463,9 @@
         .backdrop-strip::after {
             content: '';
             position: absolute;
-            bottom: 0; left: 0; width: 100%; height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
             background: linear-gradient(to bottom, transparent 40%, var(--bg-page) 100%);
+            box-shadow: inset 0 0 80px 20px rgba(20, 24, 28, 0.9); /* Edge fade */
         }
 
         /* Diary Cards Styling */
@@ -487,6 +491,23 @@
         .diary-details { flex-grow: 1; }
         .diary-title { font-family: var(--font-display); font-size: 22px; color: var(--text-heading); margin-bottom: 4px; }
         .diary-review { font-family: var(--font-mono); font-size: 14px; margin-top: 12px; color: #cbd5e1; white-space: pre-line; }
+        .poster-placeholder {
+            width: 80px; height: 120px;
+            background-color: #0d1013;
+            background-size: cover;
+            background-position: center;
+            border-radius: 4px;
+            position: relative;
+            flex-shrink: 0;
+        }
+        .poster-placeholder::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            box-shadow: inset 0 0 15px 3px rgba(20, 24, 28, 0.9);
+            border-radius: 4px;
+            pointer-events: none;
+        }
 
         /* Interactive Phone Graphic Vector Module */
         .interactive-vector-section {
@@ -607,7 +628,14 @@
         
         .state-b { display: none; }
         .selected-film-card { display: flex; gap: 20px; margin-bottom: 20px; position: relative; }
-        .selected-poster { width: 84px; height: 126px; background: #345; border-radius: 4px; object-fit: cover; }
+        .selected-poster { 
+            width: 84px; height: 126px; background: #345; border-radius: 4px; object-fit: cover; position: relative; 
+        }
+        .selected-poster-wrap { position: relative; width: 84px; height: 126px; border-radius: 4px; overflow: hidden; }
+        .selected-poster-wrap::after {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            box-shadow: inset 0 0 15px rgba(20, 24, 28, 0.95); pointer-events: none;
+        }
         
         .interactive-stars { font-size: 26px; color: rgba(69, 102, 119, 0.4); cursor: pointer; display: inline-flex; margin-bottom: 15px; }
         .interactive-stars span { padding: 0 3px; transition: color 0.15s, transform 0.15s; }
@@ -637,6 +665,35 @@
         }
         .stat-panel-c.revealed .chart-line { stroke-dashoffset: 0; }
         .chart-grid { stroke: rgba(69, 102, 119, 0.2); stroke-width: 1; }
+
+        /* Graph Hover Tooltips CSS */
+        .chart-point circle {
+            fill: var(--bg-page);
+            stroke: var(--accent-orange);
+            stroke-width: 3;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            cursor: pointer;
+        }
+        .chart-point:hover circle {
+            fill: var(--accent-orange);
+            r: 8;
+        }
+        .chart-point text.chart-tooltip {
+            opacity: 0;
+            fill: #FFF;
+            font-family: var(--font-display);
+            font-size: 16px;
+            letter-spacing: 1px;
+            transition: opacity 0.3s, transform 0.3s;
+            transform: translateY(10px);
+            pointer-events: none;
+            text-anchor: middle;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.8);
+        }
+        .chart-point:hover text.chart-tooltip {
+            opacity: 1;
+            transform: translateY(0);
+        }
         
         /* Scene 10 Layout fixes */
         .scene-10 { min-height: 100vh; background: #0a0a0a; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 60px 20px; }
@@ -653,9 +710,7 @@
     </style>
 </head>
 <body>
-    <div class="noise-overlay"></div>
-    
-    <!-- Ambient Canvas Blur elements -->
+    <!-- Ambient Canvas Blur elements (Sleek aesthetics retained) -->
     <div class="ambient-background">
         <div class="bokeh-sphere bokeh-1"></div>
         <div class="bokeh-sphere bokeh-2"></div>
@@ -721,7 +776,7 @@
         </div>
     </section>
 
-    <!-- MOVIE ADDTION INTERACTIVE ENGINE SECTION (Moved Early) -->
+    <!-- MOVIE ADDITION INTERACTIVE ENGINE SECTION -->
     <section id="review-section" class="container reveal reveal-up">
         <div class="grid-header" style="text-align: center;">ADD TO DIARY ENGINE</div>
         
@@ -738,7 +793,9 @@
                     <!-- STATE B: RATING + INTERACTIVE FORM -->
                     <div id="stateB" class="state-b">
                         <div class="selected-film-card">
-                            <img src="" id="selectedPoster" class="selected-poster" alt="Poster">
+                            <div class="selected-poster-wrap">
+                                <img src="" id="selectedPoster" class="selected-poster" alt="Poster">
+                            </div>
                             <div>
                                 <h3 id="selectedTitle" style="color:#FFF; font-size:20px; margin-bottom:4px;">Title</h3>
                                 <div id="selectedYear" style="color:var(--text-body); font-size:14px; margin-bottom:12px;">Year</div>
@@ -746,7 +803,7 @@
                                     <span data-val="1">★</span><span data-val="2">★</span><span data-val="3">★</span><span data-val="4">★</span><span data-val="5">★</span>
                                 </div>
                             </div>
-                            <button class="close-btn" id="closeStateB" style="color: #678; font-size: 20px;">✕</button>
+                            <button class="close-btn" id="closeStateB" style="color: #678; font-size: 20px; border:none; background:transparent; cursor:pointer;">✕</button>
                         </div>
                         
                         <textarea id="reviewText" class="input-dark textarea-dark" placeholder="Add a quick insight, review or visceral raw feeling..."></textarea>
@@ -785,9 +842,7 @@
         <div class="diary-card">
             <div class="diary-date">OCTOBER 2011</div>
             <div class="diary-content">
-                <div class="poster-placeholder">
-                    <div class="clapperboard-icon"></div>
-                </div>
+                <div class="poster-placeholder"></div>
                 <div class="diary-details">
                     <div class="diary-title">Beta Launch — Brooklyn Beta Conference</div>
                     <div class="stars filled">★★★<span style="color:rgba(69,102,119,0.3)">★★</span></div>
@@ -797,7 +852,7 @@ So he built one.</div>
                 </div>
             </div>
         </div>
-        <div class="pull-quote reveal reveal-up">
+        <div class="pull-quote reveal reveal-up" style="font-size:18px; color:#fff; font-style:italic; text-align:center; margin-top:30px;">
             "The hardest part was building something that had never existed before. There was no playbook."<br>
             <span style="font-size:13px; text-transform:uppercase; letter-spacing:1px; color:#678; font-style:normal; margin-top:6px; display:block;">— Matthew Buchanan, Co-founder</span>
         </div>
@@ -855,14 +910,14 @@ So he built one.</div>
         
         <div class="stats-grid">
             <div class="stat-panel-a reveal reveal-up">
-                <div class="giant-number">17,000,000</div>
-                <div style="color:#678; font-size:13px; letter-spacing:1px; text-transform:uppercase; margin-top:4px;">Global Actives Registered</div>
-                <div class="demographic-bar">
+                <div class="giant-number" style="font-family:var(--font-display); font-size:48px; color:#FFF;">17,000,000</div>
+                <div style="color:#678; font-size:13px; letter-spacing:1px; text-transform:uppercase; margin-top:4px; margin-bottom: 20px;">Global Actives Registered</div>
+                <div class="demographic-bar" style="display:flex; height:12px; border-radius:6px; overflow:hidden;">
                     <div class="demo-segment" style="width: 45%; background: var(--accent-orange);" title="Age bracket 18-24"></div>
                     <div class="demo-segment" style="width: 35%; background: var(--brand-red);" title="Age bracket 25-35"></div>
                     <div class="demo-segment" style="width: 20%; background: #3c485e;" title="Age bracket 35+"></div>
                 </div>
-                <div class="demo-labels">
+                <div class="demo-labels" style="display:flex; justify-content:space-between; font-size:11px; margin-top:8px; color:#567; font-family:var(--font-display);">
                     <span>GEN-Z CORE (45%)</span>
                     <span>MILLENNIALS (35%)</span>
                     <span>ARCHIVE VETS (20%)</span>
@@ -905,6 +960,20 @@ So he built one.</div>
                     <text x="0" y="145" fill="#567" style="font-size:11px;">2011</text>
                     <text x="238" y="145" fill="#567" style="font-size:11px;">2020</text>
                     <text x="475" y="145" fill="#567" style="font-size:11px;">2026</text>
+                    
+                    <!-- Interactive Hover Nodes -->
+                    <g class="chart-point">
+                        <circle cx="0" cy="130" r="5" />
+                        <text x="25" y="105" class="chart-tooltip">12K Users</text>
+                    </g>
+                    <g class="chart-point">
+                        <circle cx="270" cy="70" r="5" />
+                        <text x="270" y="45" class="chart-tooltip">1.8M Users</text>
+                    </g>
+                    <g class="chart-point">
+                        <circle cx="500" cy="12" r="5" />
+                        <text x="450" y="32" class="chart-tooltip">17M Users</text>
+                    </g>
                 </svg>
             </div>
         </div>
@@ -917,7 +986,7 @@ So he built one.</div>
 
     <!-- CUSTOM USER GRID ENGINE DISPLAY MODAL -->
     <section id="community-section" class="container reveal">
-        <!-- CUSTOM REQUISITE: FAVORITE FILMS GRID (4 columns layout) -->
+        <!-- CUSTOM REQUISITE: FAVORITE FILMS GRID -->
         <div class="grid-header">FAVORITE FILMS SHIFT</div>
         <div class="poster-grid grid-4-col">
             <div class="poster-card"><img src="https://raw.githubusercontent.com/ruhundutta/letterboxd-story/e7bb126721f4e27078aca825db24a04a58e99180/aJrG7OkoTMPWG5c8opz8a93AZPY.webp" alt="Poster Component"></div>
@@ -926,7 +995,7 @@ So he built one.</div>
             <div class="poster-card"><img src="https://raw.githubusercontent.com/ruhundutta/letterboxd-story/e7bb126721f4e27078aca825db24a04a58e99180/Shrek%202%20(2004).png" alt="Poster Component"></div>
         </div>
 
-        <!-- CUSTOM REQUISITE: RECENT ACTIVITY GRID (5 columns layout with micro metadata strings) -->
+        <!-- CUSTOM REQUISITE: RECENT ACTIVITY GRID -->
         <div class="grid-header">RECENT ACTIVITY TELEMETRY</div>
         <div class="poster-grid grid-5-col">
             <div>
@@ -987,14 +1056,14 @@ So he built one.</div>
         
         <p style="margin-bottom:24px; color:#cbd5e1; font-size:17px; line-height:1.8;">Philosopher C. Thi Nguyen describes a phenomenon called <strong>value capture</strong>. It happens when we take a rich, complex, unquantifiable human value—like a visceral connection to cinema—and replace it with a simplified metric ecosystem. Over time, we stop optimizing for the transformative art experience itself. We start tracking, logging, and performance-tuning the score metric matrix.</p>
         
-        <div class="slider-container">
-            <div class="slider-label">Why did you watch your last film?</div>
-            <div class="slider-poles">
+        <div class="slider-container" style="background: rgba(31,37,53,0.5); padding: 25px; border-radius: 8px;">
+            <div class="slider-label" style="font-family:var(--font-display); font-size: 18px; color: #FFF; text-align: center; margin-bottom: 20px;">Why did you watch your last film?</div>
+            <div class="slider-poles" style="display:flex; justify-content: space-between; font-size:12px; color:#678; text-transform:uppercase; font-family:var(--font-display);">
                 <span>pure aesthetic connection</span>
                 <span>to update the ledger metrics</span>
             </div>
-            <input type="range" id="valueSlider" min="0" max="100" value="50">
-            <div class="slider-response" id="sliderResponse">Sounds about right.</div>
+            <input type="range" id="valueSlider" min="0" max="100" value="50" style="width: 100%; margin: 15px 0;">
+            <div class="slider-response" id="sliderResponse" style="text-align: center; font-style: italic; color: var(--accent-orange); min-height: 24px; transition: opacity 0.3s;">Sounds about right.</div>
         </div>
     </section>
 
@@ -1002,6 +1071,30 @@ So he built one.</div>
     <div class="backdrop-strip reveal">
         <img src="https://raw.githubusercontent.com/ruhundutta/letterboxd-story/e7bb126721f4e27078aca825db24a04a58e99180/anora%201.jpg" alt="Atmospheric Layer Fade">
     </div>
+
+    <!-- NEW SECTION: MULTIMEDIA EXTENSIONS -->
+    <section class="container reveal reveal-up" style="max-width: 1000px; margin-bottom: 60px;">
+        <div class="grid-header" style="text-align: center;">MULTIMEDIA EXTENSIONS</div>
+        <div style="display: flex; gap: 30px; flex-wrap: wrap; justify-content: center; align-items: stretch;">
+            
+            <!-- Podcast Video Embed -->
+            <div style="flex: 2; min-width: 320px; background: rgba(31, 37, 53, 0.4); padding: 25px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); display: flex; flex-direction: column;">
+                <h3 style="font-family: var(--font-display); color: #FFF; font-size: 24px; margin-bottom: 15px; text-transform: uppercase;">The Cinema Score Matrix</h3>
+                <div style="position: relative; width: 100%; padding-bottom: 56.25%; border-radius: 8px; overflow: hidden; box-shadow: inset 0 0 25px rgba(20,24,28,0.9);">
+                    <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/JCIEUsFXMOE?si=DvC25ThAnubGWNE7" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+            </div>
+
+            <!-- YouTube Shorts Voxpop Embed -->
+            <div style="flex: 1; min-width: 280px; background: rgba(31, 37, 53, 0.4); padding: 25px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); display: flex; flex-direction: column; align-items: center;">
+                <h3 style="font-family: var(--font-display); color: var(--accent-orange); font-size: 24px; margin-bottom: 15px; text-transform: uppercase; text-align: center;">Voxpop Pulse</h3>
+                <div style="position: relative; width: 100%; max-width: 315px; aspect-ratio: 9/16; border-radius: 12px; overflow: hidden; box-shadow: inset 0 0 25px rgba(20,24,28,0.9);">
+                    <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/4bUKfTdD-ZQ" title="YouTube Shorts" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+            </div>
+
+        </div>
+    </section>
 
     <!-- SCENE 10: THE CLOSE (OUTRO MATRIX WITH LOG RETRIEVAL) -->
     <section class="scene-10 reveal">
@@ -1033,13 +1126,13 @@ So he built one.</div>
             <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
         </div>
         
-        <footer class="site-footer" id="siteFooter">
+        <footer class="site-footer" id="siteFooter" style="opacity: 0; transition: opacity 2s; margin-top: 40px;">
             <div style="font-weight: 600; color:#cbd5e1;">Rohan Dutta, Rajkumar, Arpit Yadav</div>
             <div style="font-size:11px; letter-spacing:1px; margin-top:2px;">MA Communication, Media Portfolio Project · University of Hyderabad · 2026</div>
             <div style="margin-top:14px; display:flex; gap:15px; justify-content:center;">
-                <a href="#" class="placeholder-link">Voxpop Component</a>
-                <a href="#" class="placeholder-link">Podcast Deck</a>
-                <a href="#" class="placeholder-link">Video Essay Edit</a>
+                <a href="#" class="placeholder-link" style="color:var(--text-body); text-decoration:none;">Voxpop Component</a>
+                <a href="#" class="placeholder-link" style="color:var(--text-body); text-decoration:none;">Podcast Deck</a>
+                <a href="#" class="placeholder-link" style="color:var(--text-body); text-decoration:none;">Video Essay Edit</a>
             </div>
         </footer>
     </section>
@@ -1272,15 +1365,21 @@ So he built one.</div>
                         
                         const div = document.createElement('div');
                         div.className = 'feed-entry';
+                        // Re-applied inline CSS structure with edge fades for the dynamically injected poster
                         div.innerHTML = `
-                            <img src="${entry.posterPath || '#'}" class="feed-poster" onerror="this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='">
-                            <div style="flex-grow:1;">
-                                <div style="display:flex; justify-content:space-between; align-items:baseline;">
-                                    <div style="color:#FFF; font-family:var(--font-display); font-size:18px;">${entry.filmTitle} <span style="font-size:13px; color:#678; font-family:var(--font-body);">${entry.filmYear}</span></div>
-                                    <div class="stars filled" style="font-size:13px;">${stars}</div>
+                            <div style="display: flex; gap: 15px; border-bottom: 1px solid rgba(69, 102, 119, 0.2); padding-bottom: 15px; margin-bottom: 15px;">
+                                <div style="position: relative; width: 60px; height: 90px; border-radius: 4px; overflow: hidden; flex-shrink: 0;">
+                                    <img src="${entry.posterPath || '#'}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='">
+                                    <div style="position: absolute; top:0; left:0; width:100%; height:100%; box-shadow: inset 0 0 10px rgba(20,24,28,0.9); pointer-events:none;"></div>
                                 </div>
-                                <div style="font-family:var(--font-mono); font-style:italic; font-size:14px; margin:5px 0; color:#cbd5e1;">${entry.review || ''}</div>
-                                <div style="font-size:11px; color:#456; text-align:right;">— ${entry.name || 'Anonymous'}, ${dateStr}</div>
+                                <div style="flex-grow:1;">
+                                    <div style="display:flex; justify-content:space-between; align-items:baseline;">
+                                        <div style="color:#FFF; font-family:var(--font-display); font-size:18px;">${entry.filmTitle} <span style="font-size:13px; color:#678; font-family:var(--font-body);">${entry.filmYear}</span></div>
+                                        <div class="stars filled" style="font-size:13px;">${stars}</div>
+                                    </div>
+                                    <div style="font-family:var(--font-mono); font-style:italic; font-size:14px; margin:5px 0; color:#cbd5e1;">${entry.review || ''}</div>
+                                    <div style="font-size:11px; color:#456; text-align:right;">— ${entry.name || 'Anonymous'}, ${dateStr}</div>
+                                </div>
                             </div>
                         `;
                         container.appendChild(div);
@@ -1328,45 +1427,5 @@ So he built one.</div>
             }, 21500);
         }
     </script>
-
-    <!-- GOOGLE APPS SCRIPT ASSET COMPILE SCHEMA TEMPLATE -->
-    <script type="text/template">
-        /* 
-        GOOGLE APPS SCRIPT BACKEND
-         
-        function doPost(e) {
-          const sheet = SpreadsheetApp.openById('YOUR_SHEET_ID').getActiveSheet();
-          const data = JSON.parse(e.postData.contents);
-          sheet.appendRow([
-            data.timestamp,
-            data.name || 'Anonymous',
-            data.filmTitle,
-            data.filmYear,
-            data.posterPath,
-            data.rating,
-            data.review
-          ]);
-          return ContentService.createTextOutput(JSON.stringify({status:'ok'})).setMimeType(ContentService.MimeType.JSON);
-        }
-         
-        function doGet(e) {
-          const sheet = SpreadsheetApp.openById('YOUR_SHEET_ID').getActiveSheet();
-          const data = sheet.getDataRange().getValues();
-          const rows = data.slice(1).reverse().slice(0,15);
-          const result = rows.map(row => ({
-            timestamp: row[0],
-            name: row[1],
-            filmTitle: row[2],
-            filmYear: row[3],
-            posterPath: row[4],
-            rating: row[5],
-            review: row[6]
-          }));
-          return ContentService.createTextOutput(JSON.stringify(result)).setMimeType(ContentService.MimeType.JSON);
-        }
-        */
-    </script>
 </body>
 </html>
-
-```
